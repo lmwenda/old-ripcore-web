@@ -35,24 +35,8 @@ router.post('/register', async (req, res) => {
         password: hashedPassword
     });
 
-    // Token Handler and Emails
-    const token = jwt.sign({user.email}, )
-
-    let mailOptions = {
-        from: process.env.USER,
-        to: user.email,
-        subject: 'Verify your Account',
-        text: 'Your Verification token. Make sure not to share this with anyone!',
-        token
-    };
-    
-    Transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-    });
+   const savedUser = await user.save();
+   res.json(savedUser);
 
 });
 

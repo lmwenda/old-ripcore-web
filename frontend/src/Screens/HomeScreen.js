@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../Components/Header";
 
 function HomeScreen(){
-    const title = "RLRecap"
+    const title = "Beat the Elite";
     return(
         <div>
             <header>
