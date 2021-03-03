@@ -1,0 +1,41 @@
+$primaryColor: #08a2e9;
+$darkShade: #087ce9;
+
+.container{
+    height: 700px;
+}
+
+#label{
+    text-align: left;
+}
+
+#top-input{
+    height: 50px;
+    margin-top: 20px;
+}
+
+#input{
+    height: 50px;
+}
+
+#liner{
+    color: #fff;
+    background: #fff;
+    height: 5px;
+}
+
+#login-button{
+    transition: all 0.6s ease;
+    margin-top: 30px;
+    width: 550px;
+    border: none;
+    color: #fff;
+    border-radius: 10px;
+    height: 40px;
+    background: $primaryColor;
+}
+
+#login-button:hover{
+    transition: all 0.6s ease;
+    background: $darkShade;
+}

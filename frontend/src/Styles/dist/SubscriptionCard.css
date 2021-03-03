@@ -1,0 +1,80 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  color: #000;
+  height: 500px;
+  width: 280%;
+}
+.container .card-1 {
+  border: 1px solid grey;
+  border-radius: 4px;
+  margin-right: 10px;
+  width: 33%;
+}
+.container .card-1 #plan-button {
+  border: 1px solid grey;
+  background: #fff;
+  margin-top: 100%;
+  border-radius: 3px;
+  width: 80%;
+  cursor: pointer;
+  padding: 10px;
+}
+.container .card-1 #liner {
+  color: #fff;
+  border-radius: 3px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  background: grey;
+  height: 10px;
+  width: 99.47%;
+}
+.container .card-2 {
+  border: 1px solid grey;
+  margin-right: 10px;
+  border-radius: 4px;
+  width: 35%;
+}
+.container .card-2 #plan-button {
+  border: 1px solid green;
+  background: green;
+  margin-top: 94%;
+  color: #fff;
+  border-radius: 3px;
+  width: 80%;
+  cursor: pointer;
+  padding: 10px;
+}
+.container .card-2 #liner {
+  color: #fff;
+  border-radius: 3px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  background: green;
+  height: 10px;
+  width: 99.47%;
+}
+.container .card-3 {
+  border: 1px solid grey;
+  border-radius: 4px;
+  width: 35%;
+}
+.container .card-3 #plan-button {
+  border: 1px solid #000;
+  background: black;
+  margin-top: 94%;
+  color: #fff;
+  border-radius: 3px;
+  width: 80%;
+  padding: 10px;
+  cursor: pointer;
+}
+.container .card-3 #liner {
+  color: #fff;
+  border-radius: 3px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  background: black;
+  height: 10px;
+  width: 99.47%;
+}
