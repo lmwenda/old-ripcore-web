@@ -8,9 +8,10 @@ import mongoose from "mongoose";
 const app = express();
 dotenv.config();
 mongoose.connect(
-    process.env.DB_CONNECTION,
-    { useNewUrlParser: true },
-    () => console.log("Connected to Database."))
+  process.env.DB_CONNECTION,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  () => console.log("Connected to Database.")
+);
 
 // Middlewares
 
@@ -20,6 +21,6 @@ app.use(express.json());
 // Route Middlewares
 import UserRoutes from "./Routes/UserRoutes.js";
 
-app.use('/api/users', UserRoutes);
+app.use("/api/users", UserRoutes);
 
 export default app;
