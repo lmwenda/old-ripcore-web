@@ -56,9 +56,9 @@ router.post("/login", async (req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.SECRET_TOKEN);
     res.header("auth-token", token);
 
-    res.send("Welcome back " + user.username + " to our Services!");
+    res.status(200).send("Welcome back " + user.username + " to our Services!");
   } catch (err) {
-    res.send(err);
+    res.status(400).send(err);
   }
 });
 
