@@ -7,6 +7,9 @@ import mongoose from "mongoose";
 
 const app = express();
 dotenv.config();
+
+// Connecting to Database
+
 mongoose.connect(
   process.env.DB_CONNECTION,
   { useNewUrlParser: true, useUnifiedTopology: true },
@@ -22,5 +25,7 @@ app.use(express.json());
 import UserRoutes from "./Routes/UserRoutes.js";
 
 app.use("/api/users", UserRoutes);
+
+// Exporting Application
 
 export default app;
