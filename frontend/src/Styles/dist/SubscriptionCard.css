@@ -1,3 +1,94 @@
+.phone-container {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-gap: 3px;
+}
+.phone-container .phone-card-1 {
+  border: 1px solid grey;
+  border-radius: 4px;
+  color: #000;
+  margin-bottom: 10px;
+  width: 300px;
+}
+.phone-container .phone-card-1 #liner {
+  color: #fff;
+  border-radius: 3px;
+  margin-top: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  background: grey;
+  height: 10px;
+  width: 100%;
+}
+.phone-container .phone-card-1 #phone-plan-button {
+  border: 1px solid grey;
+  background: #fff;
+  margin-top: 100%;
+  border-radius: 3px;
+  margin-bottom: 50px;
+  width: 80%;
+  cursor: pointer;
+  padding: 10px;
+}
+.phone-container .phone-card-2 {
+  border: 1px solid grey;
+  border-radius: 4px;
+  color: #000;
+  margin-bottom: 10px;
+  width: 300px;
+}
+.phone-container .phone-card-2 #phone-plan-button {
+  border: 1px solid green;
+  background: green;
+  color: #fff;
+  margin-top: 100%;
+  border-radius: 3px;
+  margin-bottom: 50px;
+  width: 80%;
+  cursor: pointer;
+  padding: 10px;
+}
+.phone-container .phone-card-2 #liner {
+  color: #fff;
+  border-radius: 3px;
+  margin-top: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  background: green;
+  height: 10px;
+  width: 100%;
+  margin-top: 0;
+}
+.phone-container .phone-card-3 {
+  border: 1px solid grey;
+  border-radius: 4px;
+  color: #000;
+  margin-bottom: 10px;
+  width: 300px;
+}
+.phone-container .phone-card-3 #phone-plan-button {
+  border: 1px solid black;
+  background: black;
+  color: #fff;
+  margin-top: 100%;
+  border-radius: 3px;
+  margin-bottom: 50px;
+  width: 80%;
+  cursor: pointer;
+  padding: 10px;
+}
+.phone-container .phone-card-3 #liner {
+  color: #fff;
+  border-radius: 3px;
+  margin-top: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  background: black;
+  height: 10px;
+  width: 100%;
+  margin-top: 0;
+}
+
 .container {
   display: flex;
   flex-direction: row;
@@ -23,11 +114,12 @@
 .container .card-1 #liner {
   color: #fff;
   border-radius: 3px;
+  margin-top: 0;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   background: grey;
   height: 10px;
-  width: 99.47%;
+  width: 100%;
 }
 .container .card-2 {
   border: 1px solid grey;
@@ -48,11 +140,12 @@
 .container .card-2 #liner {
   color: #fff;
   border-radius: 3px;
+  margin-top: 0;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   background: green;
   height: 10px;
-  width: 99.47%;
+  width: 100%;
 }
 .container .card-3 {
   border: 1px solid grey;
@@ -72,9 +165,10 @@
 .container .card-3 #liner {
   color: #fff;
   border-radius: 3px;
+  margin-top: 0;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   background: black;
   height: 10px;
-  width: 99.47%;
+  width: 100%;
 }

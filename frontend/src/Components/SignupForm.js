@@ -6,7 +6,7 @@ import Axios from "axios";
 import { History } from "../Global/history";
 
 // Styles
-import '../Styles/dist/LoginForm.css';
+import '../Styles/dist/Signup.css';
 
 function SignupForm(){
     const [email, setEmail] = useState("");
@@ -25,15 +25,11 @@ function SignupForm(){
 
     return(
         <div className="container">
-            
-            <br />
+            <Form id="form" onSubmit={CreateAccount}>
+                <h1 id="title">Create an Account!</h1>
+                <hr id="liner" />
+                <br />
 
-            <h1>Create an Account!</h1>
-
-            <hr id="liner" />
-            <br />
-
-            <Form onSubmit={CreateAccount}>
                 <Form.Group controlId="formBasicEmail">
                     <Form.Control id="top-input" type="email"
                     onChange={(e) => setEmail(e.target.value)}

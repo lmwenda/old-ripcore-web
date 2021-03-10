@@ -20,6 +20,8 @@ mongoose.connect(
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static('public'));
+app.use(express.static('uploads'));
 
 // Route Middlewares
 import UserRoutes from "./Routes/UserRoutes.js";

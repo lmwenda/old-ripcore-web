@@ -11,20 +11,20 @@ function SubscriptionCard(){
             <div className="container">
                 <div className="card-1">
                     <hr id="liner" />
-                    <h3>Free</h3>
+                    <h3 id="title">Free</h3>
 
                     <button id="plan-button">Choose Plan</button>
                 </div>
 
                 <div className="card-2">
                     <hr id="liner" />
-                    <h3>Member</h3>
+                    <h3 id="title">Member</h3>
                     <button id="plan-button">Choose Plan</button>
                 </div>
 
                 <div className="card-3">
                     <hr id="liner" />
-                    <h3>Premium</h3>
+                    <h3 id="title">Premium</h3>
                     <button id="plan-button">Choose Plan</button>
                 </div>
             </div>

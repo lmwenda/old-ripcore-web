@@ -7,17 +7,13 @@ exports["default"] = void 0;
 
 var _express = _interopRequireDefault(require("express"));
 
-var _jsonWebToken = _interopRequireDefault(require("json-web-token"));
+var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
 
 var _bcrypt = _interopRequireDefault(require("bcrypt"));
 
 var _dotenv = _interopRequireDefault(require("dotenv"));
 
 var _User = _interopRequireDefault(require("../Models/User.js"));
-
-var _Code = _interopRequireDefault(require("../Models/Code.js"));
-
-var _Transporter = _interopRequireDefault(require("../Auth/Transporter.js"));
 
 var _ValidateUser2 = _interopRequireDefault(require("../Auth/ValidateUser.js"));
 
@@ -27,10 +23,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 // Initializations
 _dotenv["default"].config();
 
-var router = _express["default"].Router(); // REGISTER ROUTE
+var router = _express["default"].Router(); // Logging in with Patreon
+// REGISTER ROUTE
 
 
-router.post('/register', function _callee(req, res) {
+router.post("/register", function _callee(req, res) {
   var _ValidateUser, error, emailExists, salt, hashedPassword, user, savedUser;
 
   return regeneratorRuntime.async(function _callee$(_context) {
@@ -61,7 +58,7 @@ router.post('/register', function _callee(req, res) {
             break;
           }
 
-          return _context.abrupt("return", res.status(400).send('Email Already Exists.'));
+          return _context.abrupt("return", res.status(400).send("Email Already Exists."));
 
         case 8:
           _context.next = 10;
@@ -78,16 +75,20 @@ router.post('/register', function _callee(req, res) {
           user = new _User["default"]({
             email: req.body.email,
             username: req.body.username,
-            password: hashedPassword
-          });
+            password: hashedPassword,
+            membership: req.body.membership
+          }); // Saving the User
+
           _context.next = 17;
           return regeneratorRuntime.awrap(user.save());
 
         case 17:
           savedUser = _context.sent;
-          res.json(savedUser);
+          res.json(savedUser); // Redirecting the User
 
-        case 19:
+          res.redirect('/login');
+
+        case 20:
         case "end":
           return _context.stop();
       }
@@ -95,84 +96,115 @@ router.post('/register', function _callee(req, res) {
   });
 }); // LOGIN ROUTE
 
-router.post('/login', function _callee2(req, res) {
+router.post("/login", function _callee2(req, res) {
   var user, validPassword, token;
   return regeneratorRuntime.async(function _callee2$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
         case 0:
-          _context2.next = 2;
+          _context2.prev = 0;
+          _context2.next = 3;
           return regeneratorRuntime.awrap(_User["default"].findOne({
             email: req.body.email
           }));
 
-        case 2:
+        case 3:
           user = _context2.sent;
 
           if (user) {
-            _context2.next = 5;
-            break;
-          }
-
-          return _context2.abrupt("return", res.status(400).send('Invalid Email or Password.'));
-
-        case 5:
-          _context2.next = 7;
-          return regeneratorRuntime.awrap(_bcrypt["default"].compare(req.body.password, user.password));
-
-        case 7:
-          validPassword = _context2.sent;
-
-          if (validPassword) {
-            _context2.next = 10;
+            _context2.next = 6;
             break;
           }
 
           return _context2.abrupt("return", res.status(400).send("Invalid Email or Password."));
 
-        case 10:
+        case 6:
+          _context2.next = 8;
+          return regeneratorRuntime.awrap(_bcrypt["default"].compare(req.body.password, user.password));
+
+        case 8:
+          validPassword = _context2.sent;
+
+          if (validPassword) {
+            _context2.next = 11;
+            break;
+          }
+
+          return _context2.abrupt("return", res.status(400).send("Invalid Email or Password."));
+
+        case 11:
           // CREATING AND ASSIGNING A JWT TOKEN
-          token = _jsonWebToken["default"].sign({
+          token = _jsonwebtoken["default"].sign({
             _id: user._id
           }, process.env.SECRET_TOKEN);
-          res.header('auth-token', token).send(token);
-          res.send("Welcome back " + user.username + " to our Services!");
+          res.header("auth-token", token);
+          res.status(200).send("Welcome back " + user.username + " to our Services!");
+          _context2.next = 19;
+          break;
 
-        case 13:
+        case 16:
+          _context2.prev = 16;
+          _context2.t0 = _context2["catch"](0);
+          res.status(400).send(_context2.t0);
+
+        case 19:
         case "end":
           return _context2.stop();
       }
     }
+  }, null, null, [[0, 16]]);
+}); // Deleting the User
+
+router["delete"]('/delete/user/:id', function (req, res) {
+  _User["default"].findByIdAndDelete(req.params.id, function (err, user) {
+    if (!err) {
+      res.json(user);
+    } else {
+      res.json(err);
+    }
   });
-});
-router.post('/verify-account', function _callee3(req, res) {
-  var token, savedUser;
+
+  res.send("Deleted User");
+}); // Getting a Specific User
+
+router.get('/user/:id', function (req, res) {
+  _User["default"].findById(req.params.id, function (err, user) {
+    if (!err) {
+      res.json(user);
+    } else {
+      res.json(err);
+    }
+  });
+}); // Updating User Account Details
+
+router.put('/me/:id', function (req, res) {
+  var user = _User["default"].findById(req.params.id);
+
+  _User["default"].updateOne(user, req.body).then(console.log("Updated Account.")).then(res.send("Updated Account."));
+}); // Verifing the User
+
+router.post("/verify-account", function _callee3(req, res) {
+  var token, decode;
   return regeneratorRuntime.async(function _callee3$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
-          token = res.header('verification-token', pass);
-          _context3.prev = 1;
-          _context3.next = 4;
-          return regeneratorRuntime.awrap(user.save());
+          _context3.prev = 0;
+          token = req.header("auth-token");
+          decode = _jsonwebtoken["default"].decode(token);
+          return _context3.abrupt("return", res.status(200).send(decode));
 
-        case 4:
-          savedUser = _context3.sent;
-          res.send(JSON.stringify(savedUser));
-          _context3.next = 11;
-          break;
-
-        case 8:
-          _context3.prev = 8;
-          _context3.t0 = _context3["catch"](1);
+        case 6:
+          _context3.prev = 6;
+          _context3.t0 = _context3["catch"](0);
           res.status(400).send(_context3.t0);
 
-        case 11:
+        case 9:
         case "end":
           return _context3.stop();
       }
     }
-  }, null, null, [[1, 8]]);
+  }, null, null, [[0, 6]]);
 });
 var _default = router;
 exports["default"] = _default;

@@ -23,11 +23,10 @@ function LoginForm(){
 
     return(
         <div className="container">
-            <br />
-            <h1>Login to Elite!</h1>
-            <hr id="liner" />
-            <br />
-            <Form onSubmit={Login}>
+            <Form id="form" onSubmit={Login}>
+                <h1 id="title">Login to Elite!</h1>
+                <hr id="liner" />
+                <br />
                 <Form.Group controlId="formBasicEmail">
                     <Form.Control id="top-input" type="email" 
                     onChange={(e) => setEmail(e.target.value)}
@@ -41,7 +40,7 @@ function LoginForm(){
                 </Form.Group>
                 <button id="login-button">Login</button>
                 <Form.Text id="label" className="text-muted">
-                    Haven't created an Account? <Link to="/signup">Signup here</Link>
+                    Don't have an account? <Link to="/signup">Create one here.</Link>
                 </Form.Text>
             </Form>
         </div>

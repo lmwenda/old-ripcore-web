@@ -8,3 +8,16 @@
   width: 30%;
   text-align: center;
 }
+
+@media (min-width: 1024px) {
+  #signup-container {
+    margin-top: 100px;
+    color: #fff;
+    background: #000;
+    margin-left: 140px;
+    border-radius: 10px;
+    height: 530px;
+    width: 80%;
+    text-align: center;
+  }
+}

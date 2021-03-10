@@ -5,13 +5,14 @@ import dotenv from "dotenv";
 
 // Exported Components
 import User from "../Models/User.js";
-import Code from "../Models/Code.js";
-import Transporter from "../Auth/Transporter.js";
 import ValidateUser from "../Auth/ValidateUser.js";
 
 // Initializations
 dotenv.config();
 const router = express.Router();
+
+// Logging in with Patreon
+
 
 // REGISTER ROUTE
 router.post("/register", async (req, res) => {
@@ -32,10 +33,16 @@ router.post("/register", async (req, res) => {
     email: req.body.email,
     username: req.body.username,
     password: hashedPassword,
+    membership: req.body.membership
   });
+
+  // Saving the User
 
   const savedUser = await user.save();
   res.json(savedUser);
+
+  // Redirecting the User
+  res.redirect('/login');
 });
 
 // LOGIN ROUTE
@@ -61,6 +68,42 @@ router.post("/login", async (req, res) => {
     res.status(400).send(err);
   }
 });
+
+// Deleting the User
+router.delete('/delete/user/:id', (req, res) => {
+  User.findByIdAndDelete(req.params.id, (err, user) => {
+    if (!err) {
+      res.json(user)
+    }
+    else {
+      res.json(err)
+    }
+  });
+  res.send("Deleted User");
+});
+
+// Getting a Specific User
+
+router.get('/user/:id', (req, res) => {
+  User.findById(req.params.id, (err, user) => {
+    if (!err) {
+      res.json(user)
+    }
+    else {
+      res.json(err)
+    }
+  });
+});
+
+// Updating User Account Details
+router.put('/me/:id', (req, res) => {
+  const user = User.findById(req.params.id);
+  User.updateOne(user, req.body)
+  .then(console.log("Updated Account."))
+  .then(res.send("Updated Account."));
+})
+
+// Verifing the User
 
 router.post("/verify-account", async (req, res) => {
   try {
