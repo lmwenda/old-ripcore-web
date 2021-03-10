@@ -15,6 +15,8 @@ var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _UserRoutes = _interopRequireDefault(require("./Routes/UserRoutes.js"));
 
+var _FileRoutes = _interopRequireDefault(require("./Routes/FileRoutes.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // Initializations
@@ -37,7 +39,8 @@ app.use(_express["default"].json());
 app.use(_express["default"]["static"]('public'));
 app.use(_express["default"]["static"]('uploads')); // Route Middlewares
 
-app.use("/api/users", _UserRoutes["default"]); // Exporting Application
+app.use("/api/users", _UserRoutes["default"]);
+app.use('/api/files', _FileRoutes["default"]); // Exporting Application
 
 var _default = app;
 exports["default"] = _default;

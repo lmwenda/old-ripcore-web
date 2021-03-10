@@ -26,8 +26,10 @@ app.use(express.static('uploads'));
 
 // Route Middlewares
 import UserRoutes from "./Routes/UserRoutes.js";
+import FileRoutes from "./Routes/FileRoutes.js";
 
 app.use("/api/users", UserRoutes);
+app.use('/api/files', FileRoutes);
 
 // Exporting Application
 
