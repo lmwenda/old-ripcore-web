@@ -7,6 +7,8 @@ exports["default"] = void 0;
 
 var _express = _interopRequireDefault(require("express"));
 
+var _app = require("../app");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // Initializations
@@ -15,11 +17,13 @@ var router = _express["default"].Router(); // Routes
 
 
 var gfs;
-conn.once('open', function () {
+
+_app.conn.once('open', function () {
   // Init stream
-  gfs = Grid(conn.db, mongoose.mongo);
+  gfs = Grid(_app.conn.db, mongoose.mongo);
   gfs.collection('uploads');
 }); // Create storage engine
+
 
 var storage = new GridFsStorage({
   file: function file(req, _file) {
@@ -44,7 +48,7 @@ var upload = multer({
 }); // @route GET /
 // @desc Loads form
 
-app.get('/', function (req, res) {
+router.get('/', function (req, res) {
   gfs.files.find().toArray(function (err, files) {
     // Check if files
     if (!files || files.length === 0) {
@@ -67,13 +71,13 @@ app.get('/', function (req, res) {
 }); // @route POST /upload
 // @desc  Uploads file to DB
 
-app.post('/upload', upload.single('file'), function (req, res) {
+router.post('/upload', upload.single('file'), function (req, res) {
   // res.json({ file: req.file });
   res.redirect('/');
 }); // @route GET /files
 // @desc  Display all files in JSON
 
-app.get('/files', function (req, res) {
+router.get('/files', function (req, res) {
   gfs.files.find().toArray(function (err, files) {
     // Check if files
     if (!files || files.length === 0) {
@@ -88,7 +92,7 @@ app.get('/files', function (req, res) {
 }); // @route GET /files/:filename
 // @desc  Display single file object
 
-app.get('/files/:filename', function (req, res) {
+router.get('/files/:filename', function (req, res) {
   gfs.files.findOne({
     filename: req.params.filename
   }, function (err, file) {
@@ -105,7 +109,7 @@ app.get('/files/:filename', function (req, res) {
 }); // @route GET /image/:filename
 // @desc Display Image
 
-app.get('/image/:filename', function (req, res) {
+router.get('/image/:filename', function (req, res) {
   gfs.files.findOne({
     filename: req.params.filename
   }, function (err, file) {
@@ -130,7 +134,7 @@ app.get('/image/:filename', function (req, res) {
 }); // @route DELETE /files/:id
 // @desc  Delete file
 
-app["delete"]('/files/:id', function (req, res) {
+router["delete"]('/files/:id', function (req, res) {
   gfs.remove({
     _id: req.params.id,
     root: 'uploads'

@@ -10,11 +10,12 @@ dotenv.config();
 
 // Connecting to Database
 
-mongoose.connect(
+export const conn = mongoose.connect(
   process.env.DB_CONNECTION,
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => console.log("Connected to Database.")
 );
+
 
 // Middlewares
 

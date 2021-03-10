@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports["default"] = exports.conn = void 0;
 
 var _express = _interopRequireDefault(require("express"));
 
@@ -23,7 +23,7 @@ var app = (0, _express["default"])();
 _dotenv["default"].config(); // Connecting to Database
 
 
-_mongoose["default"].connect(process.env.DB_CONNECTION, {
+var conn = _mongoose["default"].connect(process.env.DB_CONNECTION, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }, function () {
@@ -31,6 +31,7 @@ _mongoose["default"].connect(process.env.DB_CONNECTION, {
 }); // Middlewares
 
 
+exports.conn = conn;
 app.use((0, _cors["default"])());
 app.use(_express["default"].json());
 app.use(_express["default"]["static"]('public'));
