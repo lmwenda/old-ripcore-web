@@ -1,5 +1,5 @@
 import express from "express";
-import { conn } from "../app";
+import { conn } from "../app.js";
 
 // Initializations
 
