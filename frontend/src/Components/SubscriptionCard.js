@@ -8,23 +8,23 @@ function SubscriptionCard(){
     const phoneView = mql.matches;
     if(!phoneView){
         return(
-            <div className="container">
+            <div style={{marginLeft: '100px', color: '#000'}} className="container">
                 <div className="card-1">
                     <hr id="liner" />
-                    <h3 id="title">Free</h3>
+                    <h3 style={{color: '#000', fontSize: '30px'}} id="title">Free</h3>
 
                     <button id="plan-button">Choose Plan</button>
                 </div>
 
                 <div className="card-2">
                     <hr id="liner" />
-                    <h3 id="title">Member</h3>
+                    <h3 style={{color: '#000', fontSize: '30px'}} id="title">Member</h3>
                     <button id="plan-button">Choose Plan</button>
                 </div>
 
                 <div className="card-3">
                     <hr id="liner" />
-                    <h3 id="title">Premium</h3>
+                    <h3 style={{color: '#000', fontSize: '30px'}} id="title">Premium</h3>
                     <button id="plan-button">Choose Plan</button>
                 </div>
             </div>

@@ -1,9 +1,9 @@
 $primaryColor: #08a2e9;
 $darkShade: #087ce9;
 
-@media(min-width: 1440px){
+@media(min-width:  1920px){
     .container{
-        height: 700px;
+        height: 800px;
     }
 
     #label{
@@ -45,7 +45,6 @@ $darkShade: #087ce9;
 @media(min-width: 1024px){
     .container{
         margin-top: 50px;
-        margin-left: 250px;
     }
 
     #title{

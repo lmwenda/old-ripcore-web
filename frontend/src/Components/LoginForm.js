@@ -3,6 +3,7 @@ import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import Axios from "axios";
+import Report from "./Report";
 import { History } from "../Global/history";
 
 // Styles
@@ -13,17 +14,22 @@ function LoginForm(){
     const [ password, setPassword ] = useState("");
 
     function Login(){
-        Axios.post('http://localhost:5000/api/users/login', {
-            email: email,
-            password: password
-        });
-        History.push('/');
-        console.log("Successfully Logged in", email);
+        if(email !== "" && password !== ""){
+            Axios.post('http://localhost:5000/api/users/login', {
+                email: email,
+                password: password
+            });
+            History.push('/')
+            console.log("Successfully Logged in", email);
+        }else{
+            Report("Whoops! There was an mistake in your Form!");
+            console.log("Whoops! There was an mistake in your Form!")            
+        }
     }
 
     return(
         <div className="container">
-            <Form id="form" onSubmit={Login}>
+            <Form id="form" style={{ marginLeft: '220px' }} onSubmit={Login}>
                 <h1 id="title">Login to Elite!</h1>
                 <hr id="liner" />
                 <br />

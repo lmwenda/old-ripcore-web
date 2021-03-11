@@ -9,7 +9,7 @@ import Header from "../Components/Header";
 import SignupForm from "../Components/SignupForm";
 
 function SignupScreen(){
-    const title = "Beat the Elite";
+    const title = "Rip Core";
     return(
         <div>
             <header>

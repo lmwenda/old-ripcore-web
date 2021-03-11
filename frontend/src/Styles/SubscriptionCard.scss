@@ -42,7 +42,7 @@
         width: 300px;
 
         #phone-plan-button{
-            border: 1px solid green;
+            border: 1px solid green;ss
             background: green;
             color: #fff;
             margin-top: 100%;
@@ -104,12 +104,14 @@
 .container{
     display: flex;
     flex-direction: row;
+    margin: 30px;
     color: #000;
     height: 500px;
     width: 280%;
 
     .card-1{
         border: 1px solid grey;
+        color: #000;
         border-radius: 4px;
         margin-right: 10px;
         width: 33%;

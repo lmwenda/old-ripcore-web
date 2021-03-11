@@ -9,7 +9,7 @@ import Header from "../Components/Header";
 import LoginForm from "../Components/LoginForm";
 
 function LoginScreen(){
-    const title = "Beat the Elite";
+    const title = "Rip Core";
     return(
         <div>
             <header>
