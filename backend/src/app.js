@@ -16,18 +16,19 @@ export const conn = mongoose.connect(
   () => console.log("Connected to Database.")
 );
 
-
 // Middlewares
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
-app.use(express.static('uploads'));
+app.use(express.static("public"));
+app.use(express.static("uploads"));
 
 // Route Middlewares
 import UserRoutes from "./Routes/UserRoutes.js";
+import fileRoutes from "./Routes/FileRoutes";
 
 app.use("/api/users", UserRoutes);
+app.use("/file", fileRoutes);
 
 // Exporting Application
 
