@@ -1,26 +1,23 @@
 import React from "react";
 
-import "../Styles/dist/SubscriptionScreen.css";
-
 // Components
 import Header from "../Components/Header";
-import SubscriptionCard from "../Components/SubscriptionCard";
 
-function SubscriptionScreen(){
+function DownloadScreen(){
     const title = "Rip Core";
     return(
         <div>
             <header>
                 <Header title={title} />
             </header>
-
+            
             <br />
 
-            <section id="wrapper">
-                <SubscriptionCard />
+            <section className="container">
+                <h1 style={{color: '#000'}}>Download GUI Client</h1>
             </section>
         </div>
     );
 }
 
-export default SubscriptionScreen;
+export default DownloadScreen;

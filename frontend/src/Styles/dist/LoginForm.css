@@ -1,6 +1,7 @@
-@media (min-width: 1440px) {
+@media (min-width: 1920px) {
   .container {
     height: 700px;
+    margin-left: 100px;
   }
 
   #label {

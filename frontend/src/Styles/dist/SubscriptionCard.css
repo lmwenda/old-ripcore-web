@@ -33,6 +33,7 @@
 .phone-container .phone-card-2 {
   border: 1px solid grey;
   border-radius: 4px;
+  transform: translate3d(50px);
   color: #000;
   margin-bottom: 10px;
   width: 300px;
@@ -92,12 +93,14 @@
 .container {
   display: flex;
   flex-direction: row;
+  margin: 30px;
   color: #000;
   height: 500px;
   width: 280%;
 }
 .container .card-1 {
   border: 1px solid grey;
+  color: #000;
   border-radius: 4px;
   margin-right: 10px;
   width: 33%;

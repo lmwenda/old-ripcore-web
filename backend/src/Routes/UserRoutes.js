@@ -13,7 +13,6 @@ const router = express.Router();
 
 // Logging in with Patreon
 
-
 // REGISTER ROUTE
 router.post("/register", async (req, res) => {
   // VALIDATING OUR USER
@@ -33,7 +32,7 @@ router.post("/register", async (req, res) => {
     email: req.body.email,
     username: req.body.username,
     password: hashedPassword,
-    membership: req.body.membership
+    membership: req.body.membership,
   });
 
   // Saving the User
@@ -42,7 +41,7 @@ router.post("/register", async (req, res) => {
   res.json(savedUser);
 
   // Redirecting the User
-  res.redirect('/login');
+  res.redirect("/login");
 });
 
 // LOGIN ROUTE
@@ -57,26 +56,26 @@ router.post("/login", async (req, res) => {
       req.body.password,
       user.password
     );
-    if (!validPassword) return res.status(400).send("Invalid Email or Password.");
+    if (!validPassword)
+      return res.status(400).send("Invalid Email or Password.");
 
     // CREATING AND ASSIGNING A JWT TOKEN
     const token = jwt.sign({ _id: user._id }, process.env.SECRET_TOKEN);
     res.header("auth-token", token);
 
-    res.status(200).send("Welcome back " + user.username + " to our Services!");
+    res.status(200).send("Welcome back, " + user.username);
   } catch (err) {
     res.status(400).send(err);
   }
 });
 
 // Deleting the User
-router.delete('/delete/user/:id', (req, res) => {
+router.delete("/delete/user/:id", (req, res) => {
   User.findByIdAndDelete(req.params.id, (err, user) => {
     if (!err) {
-      res.json(user)
-    }
-    else {
-      res.json(err)
+      res.json(user);
+    } else {
+      res.json(err);
     }
   });
   res.send("Deleted User");
@@ -84,24 +83,23 @@ router.delete('/delete/user/:id', (req, res) => {
 
 // Getting a Specific User
 
-router.get('/user/:id', (req, res) => {
+router.get("/user/:id", (req, res) => {
   User.findById(req.params.id, (err, user) => {
     if (!err) {
-      res.json(user)
-    }
-    else {
-      res.json(err)
+      res.json(user);
+    } else {
+      res.json(err);
     }
   });
 });
 
 // Updating User Account Details
-router.put('/me/:id', (req, res) => {
+router.put("/me/:id", (req, res) => {
   const user = User.findById(req.params.id);
   User.updateOne(user, req.body)
-  .then(console.log("Updated Account."))
-  .then(res.send("Updated Account."));
-})
+    .then(console.log("Updated Account."))
+    .then(res.send("Updated Account."));
+});
 
 // Verifing the User
 
