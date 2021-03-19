@@ -10,7 +10,7 @@ dotenv.config();
 
 // Connecting to Database
 
-export const conn = mongoose.connect(
+const conn = mongoose.connect(
   process.env.DB_CONNECTION,
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => console.log("Connected to Database.")
@@ -20,7 +20,6 @@ export const conn = mongoose.connect(
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static("public"));
 app.use(express.static("uploads"));
 
 // Route Middlewares
