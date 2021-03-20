@@ -17,6 +17,7 @@ function SignupForm(){
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [loggedIn, setLoggedIn] = useState(false);
 
     // Device Width Variables
     const wideScreen = window.matchMedia('(min-width: 1920px)');
