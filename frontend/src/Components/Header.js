@@ -2,11 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 
+// Styles
 import '../Styles/dist/Header.css';
 
 function Header({ title }){
+
     const mql = window.matchMedia('(max-width: 600px)');
     let phoneView = mql.matches;
+    
     if(!phoneView){
         return(
             <nav className="nav-bar">
@@ -28,7 +31,8 @@ function Header({ title }){
                         <li>Subscriptions</li>
                     </Link>
 
-                    <Link style={{textDecoration: 'none'}} to="/signup">
+
+                    <Link style={{ textDecoration: "none" }} to="/signup">
                         <button id="signup-button">Signup</button>
                     </Link>
                 </ul>

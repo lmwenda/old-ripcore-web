@@ -8,6 +8,10 @@ function HomeScreen(){
             <header>
                 <Header title={title} />
             </header>
+
+            <div>
+                <h1 style={{textAlign: 'center'}}>Beat the Elite</h1>
+            </div>
         </div>
     );
 }

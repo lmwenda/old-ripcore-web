@@ -1,6 +1,8 @@
 $primaryColor: #08a2e9;
 $darkShade: #087ce9;
 
+// BIG SCREEN
+
 @media(min-width:  1920px){
     .container{
         height: 800px;
@@ -41,6 +43,8 @@ $darkShade: #087ce9;
         background: $darkShade;
     }
 }
+
+// LAPTOP VIEW
 
 @media(min-width: 1024px){
     .container{
@@ -85,6 +89,3 @@ $darkShade: #087ce9;
     }
 }
 
-@media(max-width: 600px){
-    
-}

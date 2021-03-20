@@ -1,6 +1,70 @@
-@media(min-width: 1024px){
-    .container{
-        margin-top: 100px;
-        margin-left: 250px;
+@media(min-width: 1440px){
+    .wrapper{
+        margin-top: 150px;
+        color: #fff;
+        background: #000;
+        margin-left: 650px;
+        border-radius: 10px;
+        height: 530px;
+        width: 30%;
+        text-align: center;
+
+        #download-button{
+            padding: 300px;
+        }
     }
+}
+
+@media(min-width: 1024px){
+    .wrapper{
+        margin-top: 130px;
+        background: rgb(224, 222, 222);
+        color: #000;
+        margin-left: 140px;
+        border-radius: 10px;
+        height: 430px;
+        width: 80%;
+        text-align: left;
+        #const{ 
+
+            @media(min-width: 1024px){
+                #picture{
+                    margin-left: 41%;
+                }
+
+                #download-button{
+                    margin-left: 465px;
+                }
+            }
+
+            @media(min-width: 1920px){
+                #picture{
+                    margin-left: 45%;
+                }
+
+                #download-button{
+                    margin-left: 45%;
+                }
+            }
+        
+            #title{
+                color: #000;
+                font-size: 40px;
+                margin-left: 30px;
+            }
+
+            #download-button{
+                margin-top: 10px;
+                padding: 10px;
+                color: #fff;
+                background: #000;
+                border: 1px solid #000;
+                border-radius: 4px;
+            }
+        }
+    }
+}
+
+@media(max-width: 600px){
+    
 }

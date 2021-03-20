@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import Axios from "axios";
 import Report from "./Report";
 import { History } from "../Global/history";
 
@@ -10,15 +9,12 @@ import { History } from "../Global/history";
 import '../Styles/dist/LoginForm.css';
 
 function LoginForm(){
+
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
 
     function Login(){
         if(email !== "" && password !== ""){
-            Axios.post('http://localhost:5000/api/users/login', {
-                email: email,
-                password: password
-            });
             History.push('/')
             console.log("Successfully Logged in", email);
         }else{
