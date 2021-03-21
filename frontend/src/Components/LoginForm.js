@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Axios from "axios";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -12,15 +13,28 @@ function LoginForm(){
 
     const [ email, setEmail ] = useState("");
     const [ password, setPassword ] = useState("");
+    const [ loginStatus, setLoginStatus ] = useState(false);
 
     function Login(){
-        if(email !== "" && password !== ""){
-            History.push('/')
-            console.log("Successfully Logged in", email);
-        }else{
-            Report("Whoops! There was an mistake in your Form!");
-            console.log("Whoops! There was an mistake in your Form!")            
+        Axios.post('http://localhost:5000/api/users/login', {
+            email: email,
+            password: password
+        }).then(response => {
+            if(!response.data.message){
+                setLoginStatus(false);
+            }else{
+                console.log(response.data);
+                setLoginStatus(true);
+            }                        
+        });
+            
+        if(loginStatus !== false){
+            Axios.get('http://localhost:5000/api/users/verify-account')
+            .then(response => console.log(response))
+            .catch(err => console.error(err));
         }
+
+        console.log("Successfully Logged in", email);
     }
 
     return(

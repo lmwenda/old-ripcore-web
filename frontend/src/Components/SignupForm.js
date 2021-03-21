@@ -1,54 +1,48 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Form } from "react-bootstrap";
+import { Form, Accordion, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import Report from "./Report";
+import Validation from "./Validation";
 import { History } from "../Global/history";
 
 // Styles
 import '../Styles/dist/Signup.css';
 
 function SignupForm(){
-    
 
     // States
 
-    const [email, setEmail] = useState("");
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [emailReg, setEmail] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+    const [usernameReg, setUsername] = useState("");
+    const [passwordReg, setPassword] = useState("");
 
     // Device Width Variables
     const wideScreen = window.matchMedia('(min-width: 1920px)');
     const laptopView = window.matchMedia('(max-width: 1024px)');
     const phoneView = window.matchMedia('(max-width: 600px)');
 
-    function CreateAccount(){
-        if(email !== "" && username !== "" && password !== ""){
-            
-            // New User Object
-            const newUser = {
-                email, 
-                username,
-                password
-            }
-
-            // Registering new User to localStorage
-            const user = localStorage.setItem("User", JSON.stringify(newUser));
-            axios.post('http://localhost:5000/api/users/register', {
-                email: email,
-                username: username,
-                password: password
-            });
-            
+    async function CreateAccount(e){
+        e.preventDefault();
+        // Registering new User to the Database
+        axios.post('http://localhost:5000/api/users/register', {
+            email: emailReg,
+            username: usernameReg,
+            password: passwordReg,
+            membership: 'Free'
+        })
+        .then(response => {
+            console.log(response);
             // Logging and Pushing to Index Route
             console.log("Registered");
             History.push('/login');
-        } else{
-            console.error("Error on your form. Please fill in the current fields.");
-            Report("Whoops! There was an mistake in your Form!");
-        }
+        })
+        .catch(async(err) => {
+            setErrorMsg(err.request.response);
+            console.log(err.request.response);
+            await new Promise(resolve => setTimeout(resolve, 3000));
+        });        
     }
 
     if(wideScreen){
@@ -58,6 +52,14 @@ function SignupForm(){
                     <h1 id="title">Create an Account!</h1>
                     <hr id="liner" />
                     <br />
+
+                    <div className="validation-errors">
+                    {
+                        errorMsg !== "" ? (
+                            <Validation error={errorMsg} />
+                        ) : null
+                    }
+                    </div>
 
                     <Form.Group controlId="formBasicEmail">
                         <Form.Control id="top-input" type="email"
@@ -77,7 +79,20 @@ function SignupForm(){
                         placeholder="Enter Your Password: " />
                     </Form.Group>
 
-                    <button id="login-button">Create an Account</button>
+                    <Accordion defaultActiveKey="0">
+                        <Card>
+                            <Card.Header>
+                                <Accordion.Collapse eventKey="0">
+                                    <Card.Body>Membership: Free Tier</Card.Body>
+                                </Accordion.Collapse>
+                            </Card.Header>
+                        </Card>
+                    </Accordion>
+
+                    <button id="login-button" onClick={CreateAccount}>
+                        Create an Account
+                    </button>
+
                     <Form.Text id="label" className="text-muted">
                         Already have an Account? <Link to="/login">Login here</Link>
                     </Form.Text>
@@ -92,6 +107,14 @@ function SignupForm(){
                     <hr id="liner" />
                     <br />
 
+                    <div className="validation-errors">
+                    {
+                        errorMsg !== "" ? (
+                            <Validation error={errorMsg} />
+                        ) : null
+                    }
+                    </div>
+
                     <Form.Group controlId="formBasicEmail">
                         <Form.Control id="top-input" type="email"
                         onChange={(e) => setEmail(e.target.value)}
@@ -110,7 +133,7 @@ function SignupForm(){
                         placeholder="Enter Your Password: " />
                     </Form.Group>
 
-                    <button id="login-button">Create an Account</button>
+                    <button id="login-button" onClick={CreateAccount}>Create an Account</button>
                     <Form.Text id="label" className="text-muted">
                         Already have an Account? <Link to="/login">Login here</Link>
                     </Form.Text>
@@ -125,6 +148,14 @@ function SignupForm(){
                     <hr id="liner" />
                     <br />
 
+                    <div className="validation-errors">
+                    {
+                        errorMsg !== "" ? (
+                            <Validation error={errorMsg} />
+                        ) : null
+                    }
+                    </div>
+
                     <Form.Group controlId="formBasicEmail">
                         <Form.Control id="top-input" type="email"
                         onChange={(e) => setEmail(e.target.value)}
@@ -143,7 +174,7 @@ function SignupForm(){
                         placeholder="Enter Your Password: " />
                     </Form.Group>
 
-                    <button id="login-button">Create an Account</button>
+                    <button id="login-button" onClick={CreateAccount}>Create an Account</button>
                     <Form.Text id="label" className="text-muted">
                         Already have an Account? <Link to="/login">Login here</Link>
                     </Form.Text>

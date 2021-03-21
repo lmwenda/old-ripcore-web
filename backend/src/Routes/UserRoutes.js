@@ -38,10 +38,49 @@ router.post("/register", async (req, res) => {
   // Saving the User
 
   const savedUser = await user.save();
+  console.log({ user: savedUser });
   res.json(savedUser);
 
   // Redirecting the User
   res.redirect("/login");
+});
+
+// Verifing the User
+
+function VerificationToken (req, res, next){
+
+  const token = req.headers['verification-token'];
+  if(!token) return res.status(400).send("Invalid Access Token.");
+
+  try{
+      const verified = jwt.verify(token, process.env.SECRET_TOKEN)
+      .catch(err => {
+        if(err) return res.json({ auth: false, msg:
+           'You Failed the Authentication Process' });
+      });
+
+      req.user = verified;
+      req.userID = decoded.id;
+      next();
+  } 
+
+  catch(err){
+      res.status(400).send("Invalid Token:", err);
+  }
+}
+
+router.get("/verify-account", VerificationToken, (req, res) => {
+  console.log("Sucessfully Verified Account");
+  res.json({ title: 'Completed Authentication Process', 
+  message: 'Sucessfully Verified Account' });
+  res.redirect("http://localhost:3000/login");
+  // try {
+  //   const token = req.header("auth-token");
+  //   const decode = jwt.decode(token);
+  //   return res.status(200).send(decode);
+  // } catch (err) {
+  //   res.status(400).send(err);
+  // }
 });
 
 // LOGIN ROUTE
@@ -56,12 +95,22 @@ router.post("/login", async (req, res) => {
       req.body.password,
       user.password
     );
-    if (!validPassword)
+    if (!validPassword){
+      console.log("Invalid Email or Password");
       return res.status(400).send("Invalid Email or Password.");
+    }
 
     // CREATING AND ASSIGNING A JWT TOKEN
-    const token = jwt.sign({ _id: user._id }, process.env.SECRET_TOKEN);
-    res.header("auth-token", token);
+    const token = jwt.sign(
+      { _id: user._id  }, 
+      process.env.SECRET_TOKEN,
+      { expiresIn: '7 days' },
+      (err, token) => {
+        res.json({ token: token });
+      }    
+      );
+
+    res.header("verification-token", token);
 
     res.status(200).send("Welcome back, " + user.username);
   } catch (err) {
@@ -73,7 +122,7 @@ router.post("/login", async (req, res) => {
 router.delete("/delete/user/:id", (req, res) => {
   User.findByIdAndDelete(req.params.id, (err, user) => {
     if (!err) {
-      res.json(user);
+      res.json({ title: 'Deleted User', user: user });
     } else {
       res.json(err);
     }
@@ -99,18 +148,6 @@ router.put("/me/:id", (req, res) => {
   User.updateOne(user, req.body)
     .then(console.log("Updated Account."))
     .then(res.send("Updated Account."));
-});
-
-// Verifing the User
-
-router.post("/verify-account", async (req, res) => {
-  try {
-    const token = req.header("auth-token");
-    const decode = jwt.decode(token);
-    return res.status(200).send(decode);
-  } catch (err) {
-    res.status(400).send(err);
-  }
 });
 
 export default router;

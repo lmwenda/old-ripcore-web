@@ -10,7 +10,7 @@ dotenv.config();
 
 // Connecting to Database
 
-const conn = mongoose.connect(
+mongoose.connect(
   process.env.DB_CONNECTION,
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => console.log("Connected to Database.")
