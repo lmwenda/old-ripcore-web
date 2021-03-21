@@ -3,8 +3,7 @@ import Axios from "axios";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import Report from "./Report";
-import { History } from "../Global/history";
+// import { History } from "../Global/history";
 
 // Styles
 import '../Styles/dist/LoginForm.css';
@@ -12,29 +11,15 @@ import '../Styles/dist/LoginForm.css';
 function LoginForm(){
 
     const [ email, setEmail ] = useState("");
+    const [ errorMsg, setErrorMsg ] = useState("");
     const [ password, setPassword ] = useState("");
-    const [ loginStatus, setLoginStatus ] = useState(false);
 
-    function Login(){
+    async function Login(e){
+        e.preventDefault();
         Axios.post('http://localhost:5000/api/users/login', {
             email: email,
             password: password
-        }).then(response => {
-            if(!response.data.message){
-                setLoginStatus(false);
-            }else{
-                console.log(response.data);
-                setLoginStatus(true);
-            }                        
-        });
-            
-        if(loginStatus !== false){
-            Axios.get('http://localhost:5000/api/users/verify-account')
-            .then(response => console.log(response))
-            .catch(err => console.error(err));
-        }
-
-        console.log("Successfully Logged in", email);
+        }).then(async(response) => console.log(response));
     }
 
     return(
