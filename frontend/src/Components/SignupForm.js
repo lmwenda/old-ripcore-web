@@ -42,6 +42,7 @@ function SignupForm(){
             setErrorMsg(err.request.response);
             console.log(err.request.response);
             await new Promise(resolve => setTimeout(resolve, 3000));
+            setErrorMsg("");
         });        
     }
 
@@ -51,15 +52,16 @@ function SignupForm(){
                 <Form id="form" onSubmit={CreateAccount}>
                     <h1 id="title">Create an Account!</h1>
                     <hr id="liner" />
-                    <br />
 
                     <div className="validation-errors">
-                    {
-                        errorMsg !== "" ? (
-                            <Validation error={errorMsg} />
-                        ) : null
-                    }
+                        {
+                            errorMsg !== "" ? (
+                                <Validation error={errorMsg} path={'/signup'} />
+                            ) : null
+                        }
                     </div>
+
+                    <br />
 
                     <Form.Group controlId="formBasicEmail">
                         <Form.Control id="top-input" type="email"
@@ -105,15 +107,16 @@ function SignupForm(){
                 <Form id="form" onSubmit={CreateAccount}>
                     <h1 id="title">Create an Account!</h1>
                     <hr id="liner" />
-                    <br />
 
                     <div className="validation-errors">
-                    {
-                        errorMsg !== "" ? (
-                            <Validation error={errorMsg} />
-                        ) : null
-                    }
+                        {
+                            errorMsg !== "" ? (
+                                <Validation error={errorMsg} path={'/signup'} />
+                            ) : null
+                        }
                     </div>
+
+                    <br />
 
                     <Form.Group controlId="formBasicEmail">
                         <Form.Control id="top-input" type="email"
@@ -146,15 +149,16 @@ function SignupForm(){
                 <Form id="form" onSubmit={CreateAccount}>
                     <h1 id="title">Create an Account!</h1>
                     <hr id="liner" />
-                    <br />
 
                     <div className="validation-errors">
-                    {
-                        errorMsg !== "" ? (
-                            <Validation error={errorMsg} />
-                        ) : null
-                    }
+                        {
+                            errorMsg !== "" ? (
+                                <Validation error={errorMsg} path={'/signup'} />
+                            ) : null
+                        }
                     </div>
+
+                    <br />
 
                     <Form.Group controlId="formBasicEmail">
                         <Form.Control id="top-input" type="email"

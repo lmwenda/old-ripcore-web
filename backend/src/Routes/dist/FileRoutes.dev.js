@@ -7,145 +7,109 @@ exports["default"] = void 0;
 
 var _express = _interopRequireDefault(require("express"));
 
-var _crypto = _interopRequireDefault(require("crypto"));
+var _File = _interopRequireDefault(require("../Models/File.js"));
 
-var _mongoose = _interopRequireDefault(require("mongoose"));
-
-var _multerGridfsStorage = _interopRequireDefault(require("multer-gridfs-storage"));
-
-var _gridfsStream = _interopRequireDefault(require("gridfs-stream"));
-
-var _multer = _interopRequireDefault(require("multer"));
+var _path = _interopRequireDefault(require("path"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // Initializations
-var router = _express["default"].Router(); // Routes
-// Init gfs
+var router = _express["default"].Router();
 
+router.post("/upload", function _callee(req, res) {
+  var packFile, uploadPath, file;
+  return regeneratorRuntime.async(function _callee$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          if (!(!req.files || Object.keys(req.files).length === 0)) {
+            _context.next = 2;
+            break;
+          }
 
-var gfs;
+          return _context.abrupt("return", res.status(400).send("Error uploading the file"));
 
-var conn = _mongoose["default"].createConnection(process.env.DB_CONNECTION, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+        case 2:
+          packFile = req.files.packFile;
+          uploadPath = process.cwd() + "/src/pack_uploads/" + packFile.name;
 
-conn.once("open", function () {
-  // Init stream
-  gfs = (0, _gridfsStream["default"])(conn.db, _mongoose["default"].mongo);
-  gfs.collection("uploads");
-}); // Create storage engine
+          if (!(_path["default"].extname(packFile.name) !== ".pack")) {
+            _context.next = 6;
+            break;
+          }
 
-var storage = new _multerGridfsStorage["default"]({
-  url: process.env.DB_CONNECTION,
-  file: function file(req, _file) {
-    return new Promise(function (resolve, reject) {
-      _crypto["default"].randomBytes(16, function (err, buf) {
-        if (err) {
-          return reject(err);
-        }
+          return _context.abrupt("return", res.status(400).send("Invalid File"));
 
-        var filename = buf.toString("hex") + path.extname(_file.originalname);
-        var fileInfo = {
-          filename: filename,
-          bucketName: "uploads"
-        };
-        resolve(fileInfo);
-      });
-    });
-  }
-});
-var upload = (0, _multer["default"])({
-  storage: storage
-}); // @route GET /
-// @desc Loads form
+        case 6:
+          packFile.mv(uploadPath, function (err) {
+            if (err) return res.status(500).send(err);
+          });
+          file = new _File["default"]({
+            name: _path["default"].basename(packFile.name, ".pack"),
+            url: uploadPath,
+            access: req.body.access
+          });
+          _context.next = 10;
+          return regeneratorRuntime.awrap(file.save());
 
-router.get("/", function (req, res) {
-  gfs.files.find().toArray(function (err, files) {
-    // Check if files
-    res.send({
-      files: files
-    });
-  });
-}); // @route POST /upload
-// @desc  Uploads file to DB
+        case 10:
+          return _context.abrupt("return", res.status(200).send("Pack Uploaded Successfully!"));
 
-router.post("/upload", upload.single("file"), function (req, res) {
-  // res.json({ file: req.file });
-  res.status(200).send(req.file);
-}); // @route GET /files
-// @desc  Display all files in JSON
-
-router.get("/files", function (req, res) {
-  gfs.files.find().toArray(function (err, files) {
-    // Check if files
-    if (!files || files.length === 0) {
-      return res.status(404).json({
-        err: "No files exist"
-      });
-    } // Files exist
-
-
-    return res.json(files);
-  });
-}); // @route GET /files/:filename
-// @desc  Display single file object
-
-router.get("/files/:filename", function (req, res) {
-  gfs.files.findOne({
-    filename: req.params.filename
-  }, function (err, file) {
-    // Check if file
-    if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: "No file exists"
-      });
-    } // File exists
-
-
-    return res.json(file);
-  });
-}); // @route GET /image/:filename
-// @desc Display Image
-
-router.get("/image/:filename", function (req, res) {
-  gfs.files.findOne({
-    filename: req.params.filename
-  }, function (err, file) {
-    // Check if file
-    if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: "No file exists"
-      });
-    } // Check if image
-
-
-    if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
-      // Read output to browser
-      var readstream = gfs.createReadStream(file.filename);
-      readstream.pipe(res);
-    } else {
-      res.status(404).json({
-        err: "Not an image"
-      });
+        case 11:
+        case "end":
+          return _context.stop();
+      }
     }
   });
-}); // @route DELETE /files/:id
-// @desc  Delete file
+});
+router.get("/", function _callee2(req, res) {
+  return regeneratorRuntime.async(function _callee2$(_context2) {
+    while (1) {
+      switch (_context2.prev = _context2.next) {
+        case 0:
+          _File["default"].find(function (err, file) {
+            if (err) return res.status(400).send(err);
+            return res.status(200).send(file);
+          });
 
-router["delete"]("/files/:id", function (req, res) {
-  gfs.remove({
-    _id: req.params.id,
-    root: "uploads"
-  }, function (err, gridStore) {
-    if (err) {
-      return res.status(404).json({
-        err: err
-      });
+        case 1:
+        case "end":
+          return _context2.stop();
+      }
     }
+  });
+});
+router.post("/download/:pack", function _callee3(req, res) {
+  var file;
+  return regeneratorRuntime.async(function _callee3$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.next = 2;
+          return regeneratorRuntime.awrap(_File["default"].findOne({
+            name: req.params.pack
+          }));
 
-    res.redirect("/");
+        case 2:
+          file = _context3.sent;
+
+          if (file) {
+            _context3.next = 5;
+            break;
+          }
+
+          return _context3.abrupt("return", res.status(404).send("No such packs!"));
+
+        case 5:
+          res.download(file.url, function (err) {
+            if (err) return res.status(500).send("Error Downloading File!");
+          });
+
+        case 6:
+        case "end":
+          return _context3.stop();
+      }
+    }
   });
 }); // Exporting Router
 
