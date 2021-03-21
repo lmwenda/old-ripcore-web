@@ -40,7 +40,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/download/:pack", async (req, res) => {
-  const file = File.findOne({ name: req.params.pack });
+  const file = await File.findOne({ name: req.params.pack });
   if (!file) return res.status(404).send("No such packs!");
   res.download(file.url, (err) => {
     if (err) return res.status(500).send("Error Downloading File!");
