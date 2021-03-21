@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import fileupload from "express-fileupload";
 
 // Initializations
 
@@ -20,14 +21,14 @@ const conn = mongoose.connect(
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static("uploads"));
+app.use(fileupload());
 
 // Route Middlewares
 import UserRoutes from "./Routes/UserRoutes.js";
 import FileRoutes from "./Routes/FileRoutes.js";
 
 app.use("/api/users", UserRoutes);
-app.use("/api/files", FileRoutes);
+app.use("/api/pack", FileRoutes);
 
 // Exporting Application
 

@@ -1,131 +1,49 @@
 import express from "express";
-import crypto from "crypto";
-import mongoose from "mongoose";
-import GridFsStorage from "multer-gridfs-storage";
-import Grid from "gridfs-stream";
-import multer from "multer";
+import File from "../Models/File.js";
+import path from "path";
 
 // Initializations
 
 const router = express.Router();
 
-// Routes
+router.post("/upload", async (req, res) => {
+  let packFile;
+  let uploadPath;
 
-// Init gfs
-let gfs;
+  if (!req.files || Object.keys(req.files).length === 0) {
+    return res.status(400).send("Error uploading the file");
+  }
 
-const conn = mongoose.createConnection(process.env.DB_CONNECTION, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+  packFile = req.files.packFile;
+  uploadPath = process.cwd() + "/src/pack_uploads/" + packFile.name;
+
+  if (path.extname(packFile.name) !== ".pack")
+    return res.status(400).send("Invalid File");
+
+  packFile.mv(uploadPath, (err) => {
+    if (err) return res.status(500).send(err);
+  });
+  const file = new File({
+    name: path.basename(packFile.name, ".pack"),
+    url: uploadPath,
+    access: req.body.access,
+  });
+  await file.save();
+  return res.status(200).send("Pack Uploaded Successfully!");
 });
 
-conn.once("open", () => {
-  // Init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection("uploads");
-});
-
-// Create storage engine
-const storage = new GridFsStorage({
-  url: process.env.DB_CONNECTION,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
-        const filename = buf.toString("hex") + path.extname(file.originalname);
-        const fileInfo = {
-          filename: filename,
-          bucketName: "uploads",
-        };
-        resolve(fileInfo);
-      });
-    });
-  },
-});
-const upload = multer({ storage: storage });
-
-// @route GET /
-// @desc Loads form
-router.get("/", (req, res) => {
-  gfs.files.find().toArray((err, files) => {
-    // Check if files
-    res.send({ files: files });
+router.get("/", async (req, res) => {
+  File.find((err, file) => {
+    if (err) return res.status(400).send(err);
+    return res.status(200).send(file);
   });
 });
 
-// @route POST /upload
-// @desc  Uploads file to DB
-router.post("/upload", upload.single("file"), (req, res) => {
-  // res.json({ file: req.file });
-  res.status(200).send(req.file);
-});
-
-// @route GET /files
-// @desc  Display all files in JSON
-router.get("/files", (req, res) => {
-  gfs.files.find().toArray((err, files) => {
-    // Check if files
-    if (!files || files.length === 0) {
-      return res.status(404).json({
-        err: "No files exist",
-      });
-    }
-
-    // Files exist
-    return res.json(files);
-  });
-});
-
-// @route GET /files/:filename
-// @desc  Display single file object
-router.get("/files/:filename", (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    // Check if file
-    if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: "No file exists",
-      });
-    }
-    // File exists
-    return res.json(file);
-  });
-});
-
-// @route GET /image/:filename
-// @desc Display Image
-router.get("/image/:filename", (req, res) => {
-  gfs.files.findOne({ filename: req.params.filename }, (err, file) => {
-    // Check if file
-    if (!file || file.length === 0) {
-      return res.status(404).json({
-        err: "No file exists",
-      });
-    }
-
-    // Check if image
-    if (file.contentType === "image/jpeg" || file.contentType === "image/png") {
-      // Read output to browser
-      const readstream = gfs.createReadStream(file.filename);
-      readstream.pipe(res);
-    } else {
-      res.status(404).json({
-        err: "Not an image",
-      });
-    }
-  });
-});
-
-// @route DELETE /files/:id
-// @desc  Delete file
-router.delete("/files/:id", (req, res) => {
-  gfs.remove({ _id: req.params.id, root: "uploads" }, (err, gridStore) => {
-    if (err) {
-      return res.status(404).json({ err: err });
-    }
-
-    res.redirect("/");
+router.post("/download/:pack", async (req, res) => {
+  const file = File.findOne({ name: req.params.pack });
+  if (!file) return res.status(404).send("No such packs!");
+  res.download(file.url, (err) => {
+    if (err) return res.status(500).send("Error Downloading File!");
   });
 });
 
