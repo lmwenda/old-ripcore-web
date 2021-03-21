@@ -31,7 +31,8 @@ function LoginForm(){
                     `${response.request.responseText}!`
                 );
                 console.log(welcomeMsg);
-                History
+                History.push('/');
+                window.location.reload();
             })
             .catch(async(err) => {
                 if(err){
