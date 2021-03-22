@@ -19,7 +19,11 @@ mongoose.connect(
 
 // Middlewares
 
-app.use(cors());
+app.use(
+  cors({
+    exposedHeaders: "verification-token",
+  })
+);
 app.use(express.json());
 app.use(fileupload());
 
