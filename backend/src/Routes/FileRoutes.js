@@ -7,7 +7,7 @@ import fs from "fs";
 
 const router = express.Router();
 
-router.post("/upload", async (req, res) => {
+router.post("/upload/:id", async (req, res) => {
   let packFile;
   let uploadPath;
 
@@ -22,12 +22,14 @@ router.post("/upload", async (req, res) => {
     return res.status(400).send("Invalid File");
 
   // console.log(packFile);
-  const check = File.findOne({ name: packFile.name });
+  const check = await File.findOne({
+    name: path.basename(packFile.name, ".pack"),
+  });
   if (!check) {
     const file = new File({
       name: path.basename(packFile.name, ".pack"),
       url: uploadPath,
-      access: req.body.access,
+      access: req.params.id,
     });
     packFile.mv(uploadPath, (err) => {
       if (err) return res.status(500).send(err);
