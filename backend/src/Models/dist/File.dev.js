@@ -10,10 +10,20 @@ var _mongoose = _interopRequireDefault(require("mongoose"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // File Schema
-var FileSchema = _mongoose["default"].Schema({}); // Exporting the File Model
+var FileSchema = _mongoose["default"].Schema({
+  name: {
+    type: String
+  },
+  url: {
+    type: String
+  },
+  access: {
+    type: Number
+  }
+}); // Exporting the File Model
 
 
-var File = _mongoose["default"].model('File', FileSchema);
+var File = _mongoose["default"].model("File", FileSchema);
 
 var _default = File;
 exports["default"] = _default;

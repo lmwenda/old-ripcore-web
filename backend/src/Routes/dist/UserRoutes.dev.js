@@ -84,16 +84,54 @@ router.post("/register", function _callee(req, res) {
 
         case 17:
           savedUser = _context.sent;
+          console.log({
+            user: savedUser
+          });
           res.json(savedUser); // Redirecting the User
 
-          res.redirect('/login');
+          res.redirect("/login");
 
-        case 20:
+        case 21:
         case "end":
           return _context.stop();
       }
     }
   });
+}); // Verifing the User
+
+function VerificationToken(req, res, next) {
+  var token = req.headers['verification-token'];
+  if (!token) return res.status(400).send("Invalid Access Token.");
+
+  try {
+    var verified = _jsonwebtoken["default"].verify(token, process.env.SECRET_TOKEN)["catch"](function (err) {
+      if (err) return res.json({
+        auth: false,
+        msg: 'You Failed the Authentication Process'
+      });
+    });
+
+    req.user = verified;
+    req.userID = decoded.id;
+    next();
+  } catch (err) {
+    res.status(400).send("Invalid Token:", err);
+  }
+}
+
+router.get("/verify-account", VerificationToken, function (req, res) {
+  console.log("Sucessfully Verified Account");
+  res.json({
+    title: 'Completed Authentication Process',
+    message: 'Sucessfully Verified Account'
+  });
+  res.redirect("http://localhost:3000/login"); // try {
+  //   const token = req.header("auth-token");
+  //   const decode = jwt.decode(token);
+  //   return res.status(200).send(decode);
+  // } catch (err) {
+  //   res.status(400).send(err);
+  // }
 }); // LOGIN ROUTE
 
 router.post("/login", function _callee2(req, res) {
@@ -126,39 +164,49 @@ router.post("/login", function _callee2(req, res) {
           validPassword = _context2.sent;
 
           if (validPassword) {
-            _context2.next = 11;
+            _context2.next = 12;
             break;
           }
 
+          console.log("Invalid Email or Password");
           return _context2.abrupt("return", res.status(400).send("Invalid Email or Password."));
 
-        case 11:
+        case 12:
           // CREATING AND ASSIGNING A JWT TOKEN
           token = _jsonwebtoken["default"].sign({
             _id: user._id
-          }, process.env.SECRET_TOKEN);
-          res.header("auth-token", token);
-          res.status(200).send("Welcome back " + user.username + " to our Services!");
-          _context2.next = 19;
+          }, process.env.SECRET_TOKEN, {
+            expiresIn: '7 days'
+          }, function (err, token) {
+            res.json({
+              token: token
+            });
+          });
+          res.header("verification-token", token);
+          res.status(200).send("Welcome back, " + user.username);
+          _context2.next = 20;
           break;
 
-        case 16:
-          _context2.prev = 16;
+        case 17:
+          _context2.prev = 17;
           _context2.t0 = _context2["catch"](0);
           res.status(400).send(_context2.t0);
 
-        case 19:
+        case 20:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[0, 16]]);
+  }, null, null, [[0, 17]]);
 }); // Deleting the User
 
-router["delete"]('/delete/user/:id', function (req, res) {
+router["delete"]("/delete/user/:id", function (req, res) {
   _User["default"].findByIdAndDelete(req.params.id, function (err, user) {
     if (!err) {
-      res.json(user);
+      res.json({
+        title: 'Deleted User',
+        user: user
+      });
     } else {
       res.json(err);
     }
@@ -167,7 +215,7 @@ router["delete"]('/delete/user/:id', function (req, res) {
   res.send("Deleted User");
 }); // Getting a Specific User
 
-router.get('/user/:id', function (req, res) {
+router.get("/user/:id", function (req, res) {
   _User["default"].findById(req.params.id, function (err, user) {
     if (!err) {
       res.json(user);
@@ -177,34 +225,10 @@ router.get('/user/:id', function (req, res) {
   });
 }); // Updating User Account Details
 
-router.put('/me/:id', function (req, res) {
+router.put("/me/:id", function (req, res) {
   var user = _User["default"].findById(req.params.id);
 
   _User["default"].updateOne(user, req.body).then(console.log("Updated Account.")).then(res.send("Updated Account."));
-}); // Verifing the User
-
-router.post("/verify-account", function _callee3(req, res) {
-  var token, decode;
-  return regeneratorRuntime.async(function _callee3$(_context3) {
-    while (1) {
-      switch (_context3.prev = _context3.next) {
-        case 0:
-          _context3.prev = 0;
-          token = req.header("auth-token");
-          decode = _jsonwebtoken["default"].decode(token);
-          return _context3.abrupt("return", res.status(200).send(decode));
-
-        case 6:
-          _context3.prev = 6;
-          _context3.t0 = _context3["catch"](0);
-          res.status(400).send(_context3.t0);
-
-        case 9:
-        case "end":
-          return _context3.stop();
-      }
-    }
-  }, null, null, [[0, 6]]);
 });
 var _default = router;
 exports["default"] = _default;
