@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Axios from "axios";
 import { Form } from "react-bootstrap";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Welcome from "./Welcome";
 import Validation from "./Validation";
-// import { History } from "../Global/history";
+import { History } from "../Global/history";
 
 // Styles
 import "../Styles/dist/LoginForm.css";
@@ -26,13 +26,14 @@ function LoginForm({ history }) {
         localStorage.setItem("token", response.headers["verification-token"]);
         console.log(localStorage.getItem("token"));
         setWelcomeMsg(`${response.request.responseText}!`);
+        History.push("/");
         window.location.reload();
       })
       .catch(async (err) => {
         if (err) {
-          //   setErrorMsg(err.request.response);
-          //   await new Promise((resolve) => setTimeout(resolve, 3000));
-          //   setErrorMsg("");
+          setErrorMsg(err.request.response);
+          await new Promise((resolve) => setTimeout(resolve, 3000));
+          setErrorMsg("");
           console.log(err);
         } else {
           return;
@@ -43,7 +44,7 @@ function LoginForm({ history }) {
   return (
     <div className="container">
       <Form id="form" style={{ marginLeft: "220px" }} onSubmit={Login}>
-        <h1 id="title">Login to Elite!</h1>
+        <h1 id="title">Login to Rip Core!</h1>
         <hr id="liner" />
 
         <div className="validation-pass">
