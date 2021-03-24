@@ -1,0 +1,28 @@
+$dark: #0f0f0f;
+
+.usersettings{
+    display: flex;
+    .usersettings_sidebar{
+        background-color: $dark;
+        color: #fff;
+        text-align: center;
+        height: 100vh;
+        flex: 0.25;
+    }
+
+    .usersettings_sidebar > div{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .usersettings_sidebar > hr{
+        background: #fff;
+        height: 3px;
+    }
+
+    .usersettings_main{
+        background-color: #eee;
+        flex: 0.75;
+        height: 100vh;
+    }
+}

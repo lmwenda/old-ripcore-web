@@ -80,6 +80,7 @@ router.post("/login", async (req, res) => {
       expiresIn: "7 days",
     });
 
+    res.header("user-id", user._id);
     res.header("verification-token", token);
 
     res.status(200).send("Welcome back, " + user.username);

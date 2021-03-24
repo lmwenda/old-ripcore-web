@@ -1,0 +1,23 @@
+.usersettings {
+  display: flex;
+}
+.usersettings .usersettings_sidebar {
+  background-color: #0f0f0f;
+  color: #fff;
+  text-align: center;
+  height: 100vh;
+  flex: 0.25;
+}
+.usersettings .usersettings_sidebar > div {
+  display: flex;
+  flex-direction: column;
+}
+.usersettings .usersettings_sidebar > hr {
+  background: #fff;
+  height: 3px;
+}
+.usersettings .usersettings_main {
+  background-color: #eee;
+  flex: 0.75;
+  height: 100vh;
+}

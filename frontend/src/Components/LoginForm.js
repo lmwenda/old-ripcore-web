@@ -9,7 +9,11 @@ import Validation from "./Validation";
 // Styles
 import "../Styles/dist/LoginForm.css";
 
-function LoginForm(props) {
+function LoginForm() {
+  // localStorage
+  const id = localStorage.getItem('_id');
+
+  // States
 
   const [email, setEmail] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
@@ -26,11 +30,16 @@ function LoginForm(props) {
       
     })
       .then(async (response) => {
+        console.log(response);
 
         localStorage.setItem("token", response.headers["verification-token"]);
         console.log(localStorage.getItem("token"));
 
-        setWelcomeMsg(`${response.request.responseText}!`);
+        if(!id){
+          localStorage.setItem('_id', response.headers["user-id"]);
+        }
+
+        setWelcomeMsg(`${response.request.responseText}! Please Refresh your Page.`);
 
       })
       .catch(async (err) => {

@@ -156,22 +156,23 @@ router.post("/login", function _callee2(req, res) {
           }, process.env.SECRET_TOKEN, {
             expiresIn: "7 days"
           });
+          res.header("user-id", user._id);
           res.header("verification-token", token);
           res.status(200).send("Welcome back, " + user.username);
-          _context2.next = 20;
+          _context2.next = 21;
           break;
 
-        case 17:
-          _context2.prev = 17;
+        case 18:
+          _context2.prev = 18;
           _context2.t0 = _context2["catch"](0);
           res.status(400).send(_context2.t0);
 
-        case 20:
+        case 21:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[0, 17]]);
+  }, null, null, [[0, 18]]);
 }); // Deleting the User
 
 router["delete"]("/delete/user/:id", function (req, res) {

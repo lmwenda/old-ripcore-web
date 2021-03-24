@@ -13,14 +13,22 @@ function Header({ title }) {
     username: ''
   });
 
-  // GETTING THE USER
-
   const _id = localStorage.getItem('_id');
-  axios.get(`http://localhost:5000/api/users/user/${_id}`)
-    .then(response => {
-      setUser({ username: response.data.username });
-    })
-    .catch(err => console.log(err));
+  const token = localStorage.getItem('token');
+
+  React.useEffect(() => {
+
+    // GETTING THE USER
+
+    if(token){
+      axios.get(`http://localhost:5000/api/users/user/${_id}`)
+        .then(response => {
+          setUser({ username: response.data.username });
+        })
+        .catch(err => console.log(err));
+    }
+
+  }, [token, _id]);
 
   const mql = window.matchMedia("(max-width: 600px)");
   let phoneView = mql.matches;
@@ -34,13 +42,29 @@ function Header({ title }) {
             <li>Home</li>
           </Link>
 
-          <Link style={{ textDecoration: "none" }} to="/download">
-            <li>Download</li>
-          </Link>
+          {
+            token ? (
+              <Link style={{ textDecoration: "none" }} to="/download">
+                <li>Download</li>
+              </Link>
+            ) : ( 
+              <Link style={{ textDecoration: "none" }} to="/login">
+                <li>Download</li>
+              </Link>
+            )
+          }
 
-          <Link style={{ textDecoration: "none" }} to="/subscriptions">
-            <li>Subscriptions</li>
-          </Link>
+          {
+            token ? (
+              <Link style={{ textDecoration: "none" }} to="/subscriptions">
+                <li>Subscriptions</li>
+              </Link>
+            ) : ( 
+              <Link style={{ textDecoration: "none" }} to="/login">
+                <li>Subscriptions</li>
+              </Link>
+            )
+          }
 
           {
             _id ? (
@@ -92,7 +116,7 @@ function Header({ title }) {
             {
             _id ? (
               <Link style={{ textDecoration: "none" }} to={`/settings/${_id}`}>
-                <button id="signup-button">{user.username}</button>
+                Welcome back, {user.username}
               </Link>
             ) : (
               <Link style={{ textDecoration: "none" }} to="/signup">

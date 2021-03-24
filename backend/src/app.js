@@ -21,7 +21,7 @@ mongoose.connect(
 
 app.use(
   cors({
-    exposedHeaders: "verification-token",
+    exposedHeaders: "verification-token, user-id",
   })
 );
 app.use(express.json());
