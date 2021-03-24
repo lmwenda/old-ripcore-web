@@ -24,6 +24,10 @@ var UserSchema = _mongoose["default"].Schema({
     min: 6,
     max: 1024
   },
+  // Admin Fiels
+  isAdmin: {
+    type: Boolean
+  },
   // Subscription/Membership Fields
   subscribed: {
     type: Boolean

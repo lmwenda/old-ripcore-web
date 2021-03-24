@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Form, Accordion, Card } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import Validation from "./Validation";
-import { History } from "../Global/history";
 
 // Styles
 import '../Styles/dist/Signup.css';
+import Welcome from "./Welcome";
 
-function SignupForm(){
+function SignupForm(props){
 
     // States
 
@@ -17,6 +17,7 @@ function SignupForm(){
     const [errorMsg, setErrorMsg] = useState("");
     const [usernameReg, setUsername] = useState("");
     const [passwordReg, setPassword] = useState("");
+    const [welcomeMsgReg, setWelcomeMsgReg ] = useState("");
 
     // Device Width Variables
     const wideScreen = window.matchMedia('(min-width: 1920px)');
@@ -27,22 +28,39 @@ function SignupForm(){
         e.preventDefault();
         // Registering new User to the Database
         axios.post('http://localhost:5000/api/users/register', {
+            
             email: emailReg,
             username: usernameReg,
             password: passwordReg,
-            membership: 'Free'
+            membership: 'Free',
+            isAdmin: false,
+
         })
         .then(response => {
+            const id = response.data._id;
+            console.log(id);
+            localStorage.setItem("_id", id);
+
             console.log(response);
+            setWelcomeMsgReg("Successfully Created an Account.");
+
             // Logging and Pushing to Index Route
+
             console.log("Registered");
-            History.push('/login');
+            props.history.push('/login');
+
         })
         .catch(async(err) => {
-            setErrorMsg(err.request.response);
-            console.log(err.request.response);
-            await new Promise(resolve => setTimeout(resolve, 3000));
-            setErrorMsg("");
+            try{
+                setErrorMsg(err.request.response);
+                console.log(err.request.response);
+
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                setErrorMsg("");
+            } catch(e){
+                console.error(e);
+                return e;
+            }
         });        
     }
 
@@ -52,6 +70,15 @@ function SignupForm(){
                 <Form id="form" onSubmit={CreateAccount}>
                     <h1 id="title">Create an Account!</h1>
                     <hr id="liner" />
+
+                    <div className="validation-successful">
+                        {
+                            welcomeMsgReg !== "" ? (
+                                <Welcome message={welcomeMsgReg}
+                                path="/login" />
+                            ) : null
+                        }
+                    </div>
 
                     <div className="validation-errors">
                         {
@@ -81,15 +108,9 @@ function SignupForm(){
                         placeholder="Enter Your Password: " />
                     </Form.Group>
 
-                    <Accordion defaultActiveKey="0">
-                        <Card>
-                            <Card.Header>
-                                <Accordion.Collapse eventKey="0">
-                                    <Card.Body>Membership: Free Tier</Card.Body>
-                                </Accordion.Collapse>
-                            </Card.Header>
-                        </Card>
-                    </Accordion>
+                    <div className="membership">
+                        Membership: Free Tier
+                    </div>
 
                     <button id="login-button" onClick={CreateAccount}>
                         Create an Account
@@ -136,6 +157,10 @@ function SignupForm(){
                         placeholder="Enter Your Password: " />
                     </Form.Group>
 
+                    <div className="membership">
+                        Membership: Free Tier
+                    </div>
+
                     <button id="login-button" onClick={CreateAccount}>Create an Account</button>
                     <Form.Text id="label" className="text-muted">
                         Already have an Account? <Link to="/login">Login here</Link>
@@ -177,6 +202,10 @@ function SignupForm(){
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter Your Password: " />
                     </Form.Group>
+
+                    <div className="membership">
+                        Membership: Free Tier
+                    </div>
 
                     <button id="login-button" onClick={CreateAccount}>Create an Account</button>
                     <Form.Text id="label" className="text-muted">

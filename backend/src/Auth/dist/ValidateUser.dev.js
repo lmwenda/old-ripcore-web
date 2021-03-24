@@ -12,10 +12,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 function ValidateUser(body) {
   var schema = _joi["default"].object({
-    username: _joi["default"].string().min(3).required(),
     email: _joi["default"].string().min(4).required().email(),
+    username: _joi["default"].string().min(3).required(),
     password: _joi["default"].string().min(6).required(),
-    membership: _joi["default"].string().required()
+    membership: _joi["default"].string().required(),
+    isAdmin: _joi["default"]["boolean"]().required()
   });
 
   return schema.validate(body);

@@ -75,6 +75,14 @@
     background: #08a2e9;
   }
 
+  .membership {
+    border: 1px solid #fff;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    color: #000;
+  }
+
   #login-button:hover {
     transition: all 0.6s ease;
     background: #087ce9;

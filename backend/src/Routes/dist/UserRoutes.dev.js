@@ -23,7 +23,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 // Initializations
 _dotenv["default"].config();
 
-var router = _express["default"].Router(); // Logging in with Patreon
+var router = _express["default"].Router(); // Logging in with Discord
 // REGISTER ROUTE
 
 
@@ -74,9 +74,10 @@ router.post("/register", function _callee(req, res) {
           // CREATING OUR NEW USER
           user = new _User["default"]({
             email: req.body.email,
-            username: req.body.username,
             password: hashedPassword,
-            membership: req.body.membership
+            username: req.body.username,
+            membership: req.body.membership,
+            isAdmin: req.body.isAdmin
           }); // Saving the User
 
           _context.next = 17;
@@ -99,39 +100,16 @@ router.post("/register", function _callee(req, res) {
   });
 }); // Verifing the User
 
-function VerificationToken(req, res, next) {
-  var token = req.headers['verification-token'];
-  if (!token) return res.status(400).send("Invalid Access Token.");
-
+router.post("/verify", function (req, res) {
   try {
-    var verified = _jsonwebtoken["default"].verify(token, process.env.SECRET_TOKEN)["catch"](function (err) {
-      if (err) return res.json({
-        auth: false,
-        msg: 'You Failed the Authentication Process'
-      });
-    });
+    var token = req.header("verification-token");
 
-    req.user = verified;
-    req.userID = decoded.id;
-    next();
+    var decode = _jsonwebtoken["default"].verify(token, process.env.SECRET_TOKEN);
+
+    return res.status(200).send(decode);
   } catch (err) {
-    res.status(400).send("Invalid Token:", err);
+    res.status(400).send(err);
   }
-}
-
-router.get("/verify-account", VerificationToken, function (req, res) {
-  console.log("Sucessfully Verified Account");
-  res.json({
-    title: 'Completed Authentication Process',
-    message: 'Sucessfully Verified Account'
-  });
-  res.redirect("http://localhost:3000/login"); // try {
-  //   const token = req.header("auth-token");
-  //   const decode = jwt.decode(token);
-  //   return res.status(200).send(decode);
-  // } catch (err) {
-  //   res.status(400).send(err);
-  // }
 }); // LOGIN ROUTE
 
 router.post("/login", function _callee2(req, res) {
@@ -176,11 +154,7 @@ router.post("/login", function _callee2(req, res) {
           token = _jsonwebtoken["default"].sign({
             _id: user._id
           }, process.env.SECRET_TOKEN, {
-            expiresIn: '7 days'
-          }, function (err, token) {
-            res.json({
-              token: token
-            });
+            expiresIn: "7 days"
           });
           res.header("verification-token", token);
           res.status(200).send("Welcome back, " + user.username);
@@ -204,7 +178,7 @@ router["delete"]("/delete/user/:id", function (req, res) {
   _User["default"].findByIdAndDelete(req.params.id, function (err, user) {
     if (!err) {
       res.json({
-        title: 'Deleted User',
+        title: "Deleted User",
         user: user
       });
     } else {

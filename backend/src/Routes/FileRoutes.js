@@ -7,6 +7,8 @@ import fs from "fs";
 
 const router = express.Router();
 
+// File Routes
+
 router.post("/upload/:id", async (req, res) => {
   let packFile;
   let uploadPath;

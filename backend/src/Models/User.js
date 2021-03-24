@@ -20,6 +20,10 @@ const UserSchema = mongoose.Schema({
     max: 1024,
   },
 
+  // Admin Fiels
+
+  isAdmin: { type: Boolean },
+
   // Subscription/Membership Fields
 
   subscribed: { type: Boolean},

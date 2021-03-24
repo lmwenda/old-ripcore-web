@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 
 import Welcome from "./Welcome";
 import Validation from "./Validation";
-import { History } from "../Global/history";
 
 // Styles
 import "../Styles/dist/LoginForm.css";
 
-function LoginForm({ history }) {
+function LoginForm(props) {
+
   const [email, setEmail] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [password, setPassword] = useState("");
@@ -18,25 +18,34 @@ function LoginForm({ history }) {
 
   async function Login(e) {
     e.preventDefault();
+
     Axios.post("http://localhost:5000/api/users/login", {
+
       email: email,
       password: password,
+      
     })
       .then(async (response) => {
+
         localStorage.setItem("token", response.headers["verification-token"]);
         console.log(localStorage.getItem("token"));
+
         setWelcomeMsg(`${response.request.responseText}!`);
-        History.push("/");
-        window.location.reload();
+
       })
       .catch(async (err) => {
-        if (err) {
-          setErrorMsg(err.request.response);
-          await new Promise((resolve) => setTimeout(resolve, 3000));
-          setErrorMsg("");
+        try{
+          if (err) {
+
+            setErrorMsg(err.request.response);
+            await new Promise((resolve) => setTimeout(resolve, 3000));
+            setErrorMsg("");
+
+          } else {
+            return false;
+          }
+        }catch(err){
           console.log(err);
-        } else {
-          return;
         }
       });
   }

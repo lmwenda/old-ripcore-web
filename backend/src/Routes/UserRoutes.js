@@ -11,7 +11,7 @@ import ValidateUser from "../Auth/ValidateUser.js";
 dotenv.config();
 const router = express.Router();
 
-// Logging in with Patreon
+// Logging in with Discord
 
 // REGISTER ROUTE
 router.post("/register", async (req, res) => {
@@ -30,9 +30,10 @@ router.post("/register", async (req, res) => {
   // CREATING OUR NEW USER
   const user = new User({
     email: req.body.email,
-    username: req.body.username,
     password: hashedPassword,
+    username: req.body.username,
     membership: req.body.membership,
+    isAdmin: req.body.isAdmin,
   });
 
   // Saving the User

@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 
@@ -6,6 +7,21 @@ import { Navbar, Nav } from "react-bootstrap";
 import "../Styles/dist/Header.css";
 
 function Header({ title }) {
+
+  // USER OBJECT
+  const [ user, setUser ] = React.useState({
+    username: ''
+  });
+
+  // GETTING THE USER
+
+  const _id = localStorage.getItem('_id');
+  axios.get(`http://localhost:5000/api/users/user/${_id}`)
+    .then(response => {
+      setUser({ username: response.data.username });
+    })
+    .catch(err => console.log(err));
+
   const mql = window.matchMedia("(max-width: 600px)");
   let phoneView = mql.matches;
 
@@ -26,9 +42,18 @@ function Header({ title }) {
             <li>Subscriptions</li>
           </Link>
 
-          <Link style={{ textDecoration: "none" }} to="/signup">
-            <button id="signup-button">Signup</button>
-          </Link>
+          {
+            _id ? (
+              <Link style={{ textDecoration: "none" }} to={`/settings/${_id}`}>
+                <button id="signup-button">Hello, {user.username}</button>
+              </Link>
+            ) : (
+              <Link style={{ textDecoration: "none" }} to="/signup">
+                <button id="signup-button">Signup</button>
+              </Link>
+            )
+          }
+
         </ul>
       </nav>
     );
@@ -64,9 +89,18 @@ function Header({ title }) {
               Subscriptions
             </Nav.Link>
 
-            <Nav.Link href="/signup" style={{ color: "#fff" }}>
-              Signup
-            </Nav.Link>
+            {
+            _id ? (
+              <Link style={{ textDecoration: "none" }} to={`/settings/${_id}`}>
+                <button id="signup-button">{user.username}</button>
+              </Link>
+            ) : (
+              <Link style={{ textDecoration: "none" }} to="/signup">
+                <button id="signup-button">Signup</button>
+              </Link>
+            )
+          }
+          
           </Nav>
         </Navbar.Collapse>
       </Navbar>
