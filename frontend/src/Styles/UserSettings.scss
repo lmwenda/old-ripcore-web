@@ -3,6 +3,7 @@ $dark: #0f0f0f;
 .usersettings{
     display: flex;
     .usersettings_sidebar{
+        margin-top: 100px;
         background-color: $dark;
         color: #fff;
         text-align: center;
@@ -11,6 +12,7 @@ $dark: #0f0f0f;
     }
 
     .usersettings_sidebar > div{
+        margin: 5px;
         display: flex;
         flex-direction: column;
     }
@@ -21,6 +23,7 @@ $dark: #0f0f0f;
     }
 
     .usersettings_main{
+        margin-top: 100px;
         background-color: #eee;
         flex: 0.75;
         height: 100vh;

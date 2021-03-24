@@ -3,7 +3,7 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
 
-function Show(props, { cause, title, firstButton, secondButton }) {
+function Show(props, { title, firstButton, secondButton }) {
     const _id = localStorage.getItem("_id");
 
     const [show, setShow] = useState(false);
@@ -13,7 +13,7 @@ function Show(props, { cause, title, firstButton, secondButton }) {
 
     const DeleteAccount = () => {
       axios.delete(`http://localhost:5000/api/users/delete/user/${_id}`);
-      
+
       // Removing Local Storage Items
 
       localStorage.removeItem("_id");
@@ -36,19 +36,19 @@ function Show(props, { cause, title, firstButton, secondButton }) {
     return (
       <>
         <Button variant="secondary" onClick={handleShow}>
-          {cause}
+          Delete Account
         </Button>
   
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title>{title}</Modal.Title>
+            <Modal.Title>Are you sure you want to delete your Account?</Modal.Title>
           </Modal.Header>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
-              {secondButton}
+              Cancel
             </Button>
             <Button variant="danger" onClick={DeleteAccount}>
-              {firstButton}
+              Delete Account
             </Button>
           </Modal.Footer>
         </Modal>

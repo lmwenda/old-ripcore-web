@@ -2,6 +2,7 @@
   display: flex;
 }
 .usersettings .usersettings_sidebar {
+  margin-top: 100px;
   background-color: #0f0f0f;
   color: #fff;
   text-align: center;
@@ -9,6 +10,7 @@
   flex: 0.25;
 }
 .usersettings .usersettings_sidebar > div {
+  margin: 5px;
   display: flex;
   flex-direction: column;
 }
@@ -17,6 +19,7 @@
   height: 3px;
 }
 .usersettings .usersettings_main {
+  margin-top: 100px;
   background-color: #eee;
   flex: 0.75;
   height: 100vh;
