@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 // Exported Components
 import User from "../Models/User.js";
 import ValidateUser from "../Auth/ValidateUser.js";
+import ValidateUpdatedUser from "../Auth/ValidateUpdatedUser.js";
 
 // Initializations
 dotenv.config();
@@ -15,6 +16,7 @@ const router = express.Router();
 
 // REGISTER ROUTE
 router.post("/register", async (req, res) => {
+
   // VALIDATING OUR USER
   const { error } = ValidateUser(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -116,15 +118,33 @@ router.get("/user/:id", (req, res) => {
 // Updating User Account Details
 router.put("/me/:id", async (req, res) => {
   const user = User.findById(req.params.id);
+
+  // VALIDATING OUR USER
+
+  const { error } = ValidateUpdatedUser(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  // CHECKING IF OUR USER EXISTS
+
+  const emailExists = await User.findOne({ email: req.body.email });
+  if (emailExists) return res.status(400).send("Email Already Exists.");
+
+  // HASHING PASSWORD 
+
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+ // UPDATING THE USER
+
   User.updateOne(user, {
     email: req.body.email,
     username: req.body.username,
     password: hashedPassword
   })
     .then(console.log("Updated Account."))
-    .then(res.send("Updated Account."));
+    .then(res.status(200).send("Updated Account."))
+    .catch(err => res.status(400).send(err));
+
 });
 
 export default router;

@@ -54,7 +54,7 @@ function Header({ title }) {
             )
           }
 
-          {
+          {/* {
             token ? (
               <Link style={{ textDecoration: "none" }} to="/subscriptions">
                 <li>Subscriptions</li>
@@ -64,7 +64,7 @@ function Header({ title }) {
                 <li>Subscriptions</li>
               </Link>
             )
-          }
+          } */}
 
           {
             _id ? (

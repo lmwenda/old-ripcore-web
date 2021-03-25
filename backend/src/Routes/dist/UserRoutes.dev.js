@@ -17,6 +17,8 @@ var _User = _interopRequireDefault(require("../Models/User.js"));
 
 var _ValidateUser2 = _interopRequireDefault(require("../Auth/ValidateUser.js"));
 
+var _ValidateUpdatedUser2 = _interopRequireDefault(require("../Auth/ValidateUpdatedUser.js"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 // Exported Components
@@ -201,30 +203,61 @@ router.get("/user/:id", function (req, res) {
 }); // Updating User Account Details
 
 router.put("/me/:id", function _callee3(req, res) {
-  var user, salt, hashedPassword;
+  var user, _ValidateUpdatedUser, error, emailExists, salt, hashedPassword;
+
   return regeneratorRuntime.async(function _callee3$(_context3) {
     while (1) {
       switch (_context3.prev = _context3.next) {
         case 0:
-          user = _User["default"].findById(req.params.id);
-          _context3.next = 3;
-          return regeneratorRuntime.awrap(_bcrypt["default"].genSalt(10));
+          user = _User["default"].findById(req.params.id); // VALIDATING OUR USER
 
-        case 3:
-          salt = _context3.sent;
+          _ValidateUpdatedUser = (0, _ValidateUpdatedUser2["default"])(req.body), error = _ValidateUpdatedUser.error;
+
+          if (!error) {
+            _context3.next = 4;
+            break;
+          }
+
+          return _context3.abrupt("return", res.status(400).send(error.details[0].message));
+
+        case 4:
           _context3.next = 6;
-          return regeneratorRuntime.awrap(_bcrypt["default"].hash(req.body.password, salt));
+          return regeneratorRuntime.awrap(_User["default"].findOne({
+            email: req.body.email
+          }));
 
         case 6:
+          emailExists = _context3.sent;
+
+          if (!emailExists) {
+            _context3.next = 9;
+            break;
+          }
+
+          return _context3.abrupt("return", res.status(400).send("Email Already Exists."));
+
+        case 9:
+          _context3.next = 11;
+          return regeneratorRuntime.awrap(_bcrypt["default"].genSalt(10));
+
+        case 11:
+          salt = _context3.sent;
+          _context3.next = 14;
+          return regeneratorRuntime.awrap(_bcrypt["default"].hash(req.body.password, salt));
+
+        case 14:
           hashedPassword = _context3.sent;
 
+          // UPDATING THE USER
           _User["default"].updateOne(user, {
             email: req.body.email,
             username: req.body.username,
             password: hashedPassword
-          }).then(console.log("Updated Account.")).then(res.send("Updated Account."));
+          }).then(console.log("Updated Account.")).then(res.status(200).send("Updated Account."))["catch"](function (err) {
+            return res.status(400).send(err);
+          });
 
-        case 8:
+        case 16:
         case "end":
           return _context3.stop();
       }

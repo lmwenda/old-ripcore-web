@@ -2,10 +2,17 @@ import React from 'react';
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 
+// Components
+
+import Welcome from "./Welcome";
+import Validation from './Validation';
+
 function UserUpdates() {
     const [ email, setEmail ] = React.useState("");
+    const [ errorMsg, setErrorMsg ] = React.useState("");
     const [ username, setUsername ] = React.useState("");
     const [ password, setPassword ] = React.useState("");
+    const [ welcomeMsg, setWelcomeMsg ] = React.useState("");
 
 
     // STORAGE
@@ -32,29 +39,58 @@ function UserUpdates() {
                     email: response.data.email,
                     username: response.data.username, 
                     password: response.data.password });
-                })
-                .catch(err => console.log(err));
+                });
     }
 
     }, [token, _id]);
 
     // UPDATE ACCOUNT
 
-    const UpdateAccount = () => {
-        if(username !== "" || email !== "" || password !== ""){
-            axios.put(`http://localhost:5000/api/users/me/${_id}`, {
-                email: email,
-                username: username,
-                password: password
-            })
-        } else{
-            return <p>Empty Fields</p>
-        }
+    const UpdateAccount = (e) => {
+        e.preventDefault();
+        
+        axios.put(`http://localhost:5000/api/users/me/${_id}`, {
+            email: email,
+            username: username,
+            password: password
+        })
+        .then(response => setWelcomeMsg(`${response.request.responseText}!`))
+        .catch(async (err) => {
+            try{
+              if (err) {
+    
+                setErrorMsg(err.request.response);
+                await new Promise((resolve) => setTimeout(resolve, 3000));
+                setErrorMsg("");
+    
+              } else {
+                return false;
+              }
+            }catch(err){
+              console.log(err);
+            }
+        });
     }
 
     return (
         <div style={{ margin: '100px' }}>
             <h2 style={{textAlign: 'center'}}>Update Account</h2>
+            <br />
+
+            <div className="validation-pass">
+            {welcomeMsg !== "" ? (
+                <Welcome message={welcomeMsg} path={"/"} />
+            ) : null}
+            </div>
+
+            <div className="validation-errors">
+            {errorMsg !== "" ? (
+                <Validation error={errorMsg} path={"/login"} />
+            ) : null}
+            </div>
+
+
+            <br />
             <Form onSubmit={UpdateAccount}>
             <Form.Group controlId="formBasicEmail">
                 <Form.Label>Email</Form.Label>
