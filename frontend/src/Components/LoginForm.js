@@ -11,7 +11,7 @@ import "../Styles/dist/LoginForm.css";
 
 function LoginForm() {
   // localStorage
-  const id = localStorage.getItem('_id');
+  const id = localStorage.getItem("_id");
 
   // States
 
@@ -24,36 +24,30 @@ function LoginForm() {
     e.preventDefault();
 
     Axios.post("http://localhost:5000/api/users/login", {
-
       email: email,
       password: password,
-      
     })
       .then(async (response) => {
-        console.log(response);
-
         localStorage.setItem("token", response.headers["verification-token"]);
-        console.log(localStorage.getItem("token"));
 
-        if(!id){
-          localStorage.setItem('_id', response.headers["user-id"]);
+        if (!id) {
+          localStorage.setItem("_id", response.headers["user-id"]);
         }
-
-        setWelcomeMsg(`${response.request.responseText}! Please Refresh your Page.`);
-
+        // window.location.reload(false);
+        setWelcomeMsg(
+          `${response.request.responseText}! Please Refresh your Page.`
+        );
       })
       .catch(async (err) => {
-        try{
+        try {
           if (err) {
-
             setErrorMsg(err.request.response);
             await new Promise((resolve) => setTimeout(resolve, 3000));
             setErrorMsg("");
-
           } else {
             return false;
           }
-        }catch(err){
+        } catch (err) {
           console.log(err);
         }
       });

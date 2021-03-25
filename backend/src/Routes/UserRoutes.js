@@ -7,6 +7,9 @@ import dotenv from "dotenv";
 import User from "../Models/User.js";
 import ValidateUser from "../Auth/ValidateUser.js";
 
+//custom middleware
+import checkAdmin from "../middlewares/userAdmin.js";
+
 // Initializations
 dotenv.config();
 const router = express.Router();
@@ -33,17 +36,13 @@ router.post("/register", async (req, res) => {
     password: hashedPassword,
     username: req.body.username,
     membership: req.body.membership,
-    isAdmin: req.body.isAdmin,
+    isAdmin: false,
   });
 
   // Saving the User
 
   const savedUser = await user.save();
-  console.log({ user: savedUser });
   res.json(savedUser);
-
-  // Redirecting the User
-  res.redirect("/login");
 });
 
 // Verifing the User
@@ -53,6 +52,18 @@ router.post("/verify", (req, res) => {
     const token = req.header("verification-token");
     const decode = jwt.verify(token, process.env.SECRET_TOKEN);
     return res.status(200).send(decode);
+  } catch (err) {
+    res.status(400).send(err);
+  }
+});
+
+router.post("/setadmin/:id", [checkAdmin], async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    await User.updateOne(user, {
+      isAdmin: req.body.isAdmin,
+    });
+    res.status(200).send({ status: "Success", user: user.name });
   } catch (err) {
     res.status(400).send(err);
   }
@@ -98,7 +109,6 @@ router.delete("/delete/user/:id", (req, res) => {
       res.json(err);
     }
   });
-  res.send("Deleted User");
 });
 
 // Getting a Specific User
@@ -121,10 +131,29 @@ router.put("/me/:id", async (req, res) => {
   User.updateOne(user, {
     email: req.body.email,
     username: req.body.username,
-    password: hashedPassword
+    password: hashedPassword,
   })
     .then(console.log("Updated Account."))
     .then(res.send("Updated Account."));
+});
+
+router.post("/seed", async (req, res) => {
+  const pw = req.header("admin");
+  if (pw === "ripcoreadmin") {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash("ripcoreadmin", salt);
+    const admin = new User({
+      email: "admin@ripcore.com",
+      password: hashedPassword,
+      username: "admin",
+      membership: "free",
+      isAdmin: true,
+    });
+    await admin.save();
+    res.status(200).send("Seeder created");
+  } else {
+    res.status(401).send("Unauthorized Access");
+  }
 });
 
 export default router;

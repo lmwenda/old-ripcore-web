@@ -20,21 +20,21 @@ function App() {
   const _id = localStorage.getItem("_id");
 
   return (
-      <BrowserRouter> 
-        <Switch>
-          <Route path="/" component={HomeScreen} exact />
-          <Route path="/login" component={LoginScreen} exact />
-          <Route path="/download" component={DownloadScreen} />
-          <Route path="/signup" component={SignupScreen} exact />
-          <Route path="/admin" component={PackScreen} exact />
-          <Route path="/subscriptions" component={SubscriptionScreen} />
-          <Route path="/admin/packs" component={TrainingScreen} exact />
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" component={HomeScreen} exact />
+        <Route path="/login" component={LoginScreen} exact />
+        <Route path="/download" component={DownloadScreen} />
+        <Route path="/signup" component={SignupScreen} exact />
+        <Route path="/admin" component={PackScreen} exact />
+        <Route path="/subscriptions" component={SubscriptionScreen} />
+        <Route path="/admin/packs" component={TrainingScreen} exact />
 
-          <Route path={`/settings/${_id}`} component={UserSettings} />
+        <Route path={`/settings/${_id}`} component={UserSettings} />
 
-          <Route path="*" component={() => "404 NOT FOUND"} />
-        </Switch>
-      </BrowserRouter>  
+        <Route path="*" component={() => "404 NOT FOUND"} />
+      </Switch>
+    </BrowserRouter>
   );
 }
 

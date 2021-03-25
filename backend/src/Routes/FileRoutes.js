@@ -17,13 +17,13 @@ router.post("/upload/:id", async (req, res) => {
     return res.status(400).send("Error uploading the file");
   }
 
-  packFile = req.files.packFile;
+  packFile = req.files.file;
   uploadPath = process.cwd() + "/src/pack_uploads/" + packFile.name;
 
   if (path.extname(packFile.name) !== ".pack")
     return res.status(400).send("Invalid File");
 
-  // console.log(packFile);
+  console.log(packFile);
   const check = await File.findOne({
     name: path.basename(packFile.name, ".pack"),
   });
@@ -61,7 +61,8 @@ router.post("/download/:pack", async (req, res) => {
 router.delete("/delete/:pack", async (req, res) => {
   File.findOneAndDelete({ name: req.params.pack }, (err, file) => {
     if (err) return res.status(400).send(err);
-    let uploadPath = process.cwd() + "/src/pack_uploads/" + req.params.pack;
+    let uploadPath =
+      process.cwd() + "/src/pack_uploads/" + req.params.pack + ".pack";
     fs.unlink(uploadPath, (err) => {
       if (err) throw err;
       console.log("DELETED");

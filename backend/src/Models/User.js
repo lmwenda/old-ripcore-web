@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const UserSchema = mongoose.Schema({
-
   // User Account Details
 
   email: {
@@ -26,7 +25,7 @@ const UserSchema = mongoose.Schema({
 
   // Subscription/Membership Fields
 
-  subscribed: { type: Boolean},
+  subscribed: { type: Boolean },
   membership: { type: String },
 
   // Date Field
@@ -34,8 +33,6 @@ const UserSchema = mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-
-
 });
 
 const User = mongoose.model("User", UserSchema);
