@@ -1,104 +1,131 @@
-import React from 'react'
+import React from "react";
 import { Button, Image } from "react-bootstrap";
 
-import Header from '../Components/Header';
-import Show from '../Components/Modal';
-import UserUpdates from '../Components/UserUpdates';
-import UserDetails from '../Components/UserDetails';
+import Header from "../Components/Header";
+import Show from "../Components/Modal";
+import UserUpdates from "../Components/UserUpdates";
+import UserDetails from "../Components/UserDetails";
+import { Link } from "react-router-dom";
 
 import logo from "../Global/Images/logo.jpg";
+import axios from "axios";
 
-import '../Styles/dist/UserSettings.css';
-import { Redirect } from 'react-router';
+import "../Styles/dist/UserSettings.css";
+import { Redirect } from "react-router";
 
 function UserSettings(props) {
-    const [ active, setActive ] = React.useState(false);
-    const [ details, setDetails ] = React.useState(false);
-    const [ updates, setUpdates ] = React.useState(false);
+  const [active, setActive] = React.useState(false);
+  const [details, setDetails] = React.useState(false);
+  const [updates, setUpdates] = React.useState(false);
+  const [isAdmin, setAdmin] = React.useState(false);
 
-    const Details = () => {
-        setActive(true);
-        if(updates){
-            setUpdates(false);
-        }
-        setDetails(true);
+  axios
+    .get(`http://localhost:5000/api/users/user/${localStorage.getItem("_id")}`)
+    .then((res) => setAdmin(res.data.isAdmin));
+
+  //   console.log(props);
+  const Details = () => {
+    setActive(true);
+    if (updates) {
+      setUpdates(false);
     }
+    setDetails(true);
+  };
 
-    const Update = () => {
-        setActive(true);
-        if(details){
-            setDetails(false);
-        }
-        setUpdates(true);
+  const Update = () => {
+    setActive(true);
+    if (details) {
+      setDetails(false);
     }
+    setUpdates(true);
+  };
 
-    const Logout = () => {
-        localStorage.removeItem("token");
-        localStorage.removeItem("_id");
-        return <Redirect to={{
-            pathname: '/login',
-            state: {
-              from: props.location
-            }
-          }} />
-    }
-
+  const Logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("_id");
     return (
-        <div className="usersettings">
-            <header>
-                <Header title="RIP Core" />
-            </header>
+      <Redirect
+        to={{
+          pathname: "/login",
+          state: {
+            from: props.location,
+          },
+        }}
+      />
+    );
+  };
 
-            <div className="usersettings_sidebar">
-                <h3>Account Settings</h3>
+  return (
+    <div className="usersettings">
+      <header>
+        <Header title="RIP Core" />
+      </header>
 
-                <br />
-                <hr />
-                <br />
+      <div className="usersettings_sidebar">
+        <h3>Account Settings</h3>
 
-                <div>
-                    <Button onClick={Details} style={{marginBottom: '5px'}}>
-                        Account Details
-                    </Button>
+        <br />
+        <hr />
+        <br />
 
-                    <Button onClick={Update} style={{marginBottom: '10px'}}>
-                        Update Account
-                    </Button>
+        <div>
+          <Button onClick={Details} style={{ marginBottom: "5px" }}>
+            Account Details
+          </Button>
 
-                    <Button variant="secondary" 
-                    onClick={Logout} style={{marginBottom: '5px'}}>
-                        Logout
-                    </Button>
+          <Button onClick={Update} style={{ marginBottom: "10px" }}>
+            Update Account
+          </Button>
+          {isAdmin ? (
+            <Link to="/admin">
+              <Button style={{ marginBottom: "10px", width: "100%" }}>
+                Upload Packs
+              </Button>
+            </Link>
+          ) : (
+            ""
+          )}
 
-                    <Show />
+          <Button
+            variant="secondary"
+            onClick={Logout}
+            style={{ marginBottom: "5px" }}
+          >
+            Logout
+          </Button>
 
-                </div>
-            </div>
-
-            <div className="usersettings_main">
-                {
-                    active ? (
-                        details ? (
-                            <UserDetails />
-                        ) : updates ? (
-                            <UserUpdates />
-                        ) : null
-                    ) : ( 
-                    <div>
-                        <h1 style={{
-                            color: '#000',
-                            margin: '100px',
-                            textAlign: 'center'
-                        }}>Account Settings</h1>
-                        <Image style={{height: '300px', marginLeft: '350px'}}
-                         src={logo} roundedCircle />
-                    </div>
-                    
-                    )
-                }
-            </div>
+          <Show />
         </div>
-    )
+      </div>
+
+      <div className="usersettings_main">
+        {active ? (
+          details ? (
+            <UserDetails />
+          ) : updates ? (
+            <UserUpdates />
+          ) : null
+        ) : (
+          <div>
+            <h1
+              style={{
+                color: "#000",
+                margin: "100px",
+                textAlign: "center",
+              }}
+            >
+              Account Settings
+            </h1>
+            <Image
+              style={{ height: "300px", marginLeft: "350px" }}
+              src={logo}
+              roundedCircle
+            />
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default UserSettings;
