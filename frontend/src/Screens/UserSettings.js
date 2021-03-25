@@ -11,7 +11,7 @@ import logo from "../Global/Images/logo.jpg";
 import '../Styles/dist/UserSettings.css';
 import { Redirect } from 'react-router';
 
-function UserSettings() {
+function UserSettings(props) {
     const [ active, setActive ] = React.useState(false);
     const [ details, setDetails ] = React.useState(false);
     const [ updates, setUpdates ] = React.useState(false);

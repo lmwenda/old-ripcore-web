@@ -1,3 +1,31 @@
-#background{
-    width: max-content;
+@media(min-width: 1440px){
+    .wrapper{
+        margin-top: 150px;
+        color: #000;
+        margin-left: 650px;
+        border-radius: 10px;
+        height: 530px;
+        width: 30%;
+        text-align: center;
+
+        #download-button{
+            padding: 300px;
+        }
+    }
+}
+
+@media(min-width: 1024px){
+    .wrapper{
+        margin-top: 130px;
+        color: #000;
+        margin-left: 140px;
+        border-radius: 10px;
+        height: 430px;
+        width: 80%;
+        text-align: left;
+    }
+}
+
+@media(max-width: 600px){
+    
 }
