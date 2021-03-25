@@ -55,9 +55,9 @@ function LoginForm() {
 
   return (
     <div className="container">
-      <Form id="form" style={{ marginLeft: "220px" }} onSubmit={Login}>
-        <h1 id="title">Login to Rip Core!</h1>
-        <hr id="liner" />
+      <Form id="form" style={{ color: "#000" }} onSubmit={Login}>
+        <h1 id="title" style={{color: '#000'}}>Login to Rip Core!</h1>
+        <hr id="liner" style={{background: '#000', height: '3px'}} />
 
         <div className="validation-pass">
           {welcomeMsg !== "" ? (

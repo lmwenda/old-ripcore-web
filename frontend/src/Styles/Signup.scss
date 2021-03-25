@@ -49,6 +49,7 @@ $darkShade: #087ce9;
 @media(min-width: 1024px){
     .container{
         margin-top: 50px;
+        margin-left: 22.5%;
     }
 
     #title{
@@ -84,11 +85,23 @@ $darkShade: #087ce9;
     }
 
     .membership{
-        border: 1px solid #fff;
+        transition: all 0.6s ease;
+        border: 1px solid #000;
         background-color: #fff;
         border-radius: 10px;
         padding: 10px;
+        cursor: pointer;
         color: #000;
+    }
+
+    .membership:hover{
+        border: 1px solid #000;
+        background-color: #000;
+        border-radius: 10px;
+        padding: 10px;
+        cursor: pointer;
+        color: #fff;
+        transition: all 0.6s ease;
     }
 
     #login-button:hover{

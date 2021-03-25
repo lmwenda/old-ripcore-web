@@ -1,17 +1,15 @@
 import React from "react";
-import { Button, Image } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 import Header from "../Components/Header";
 import Show from "../Components/Modal";
 import UserUpdates from "../Components/UserUpdates";
 import UserDetails from "../Components/UserDetails";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
-import logo from "../Global/Images/logo.jpg";
 import axios from "axios";
 
 import "../Styles/dist/UserSettings.css";
-import { Redirect } from "react-router";
 
 function UserSettings(props) {
   const [active, setActive] = React.useState(false);
@@ -116,11 +114,6 @@ function UserSettings(props) {
             >
               Account Settings
             </h1>
-            <Image
-              style={{ height: "300px", marginLeft: "350px" }}
-              src={logo}
-              roundedCircle
-            />
           </div>
         )}
       </div>

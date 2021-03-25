@@ -3,6 +3,10 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Navbar, Nav } from "react-bootstrap";
 
+// Images
+
+import logo from "../Global/Images/logo.jpg";
+
 // Styles
 import "../Styles/dist/Header.css";
 
@@ -36,6 +40,7 @@ function Header({ title }) {
   if (!phoneView) {
     return (
       <nav className="nav-bar">
+        <image src={logo} alt="" />
         <h2>{title}</h2>
         <ul className="nav">
           <Link style={{ textDecoration: "none" }} to="/">
@@ -69,11 +74,11 @@ function Header({ title }) {
           {
             _id ? (
               <Link style={{ textDecoration: "none" }} to={`/settings/${_id}`}>
-                <button id="signup-button">Hello, {user.username}</button>
+                <li id="welcome">Hello, {user.username}</li>
               </Link>
             ) : (
               <Link style={{ textDecoration: "none" }} to="/signup">
-                <button id="signup-button">Signup</button>
+                <li id="welcome">Signup</li>
               </Link>
             )
           }

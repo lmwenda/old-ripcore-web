@@ -1,7 +1,6 @@
 @media (min-width: 1920px) {
   .container {
     height: 700px;
-    margin-left: 100px;
   }
 
   #label {
@@ -18,9 +17,9 @@
   }
 
   #liner {
-    color: #fff;
-    background: #fff;
-    height: 5px;
+    color: #000;
+    background: #000;
+    height: 3px;
   }
 
   #login-button {
@@ -42,7 +41,6 @@
 @media (min-width: 1024px) {
   .container {
     margin-top: 100px;
-    margin-left: 250px;
   }
 
   #title {

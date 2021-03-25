@@ -66,10 +66,10 @@ function SignupForm(props){
 
     if(wideScreen){
         return(
-            <div className="container" style={{marginLeft: '22.5%'}}>
+            <div className="container" style={{color: '#000'}}>
                 <Form id="form" onSubmit={CreateAccount}>
-                    <h1 id="title">Create an Account!</h1>
-                    <hr id="liner" />
+                    <h1 id="title" style={{color: '#000'}}>Create an Account!</h1>
+                    <hr id="liner" style={{background: '#000'}} />
 
                     <div className="validation-successful">
                         {
