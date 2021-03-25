@@ -1,17 +1,18 @@
 import React from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
-import Header from "../Components/Header";
 import Show from "../Components/Modal";
+import Header from "../Components/Header";
 import UserUpdates from "../Components/UserUpdates";
 import UserDetails from "../Components/UserDetails";
-import { Link, Redirect } from "react-router-dom";
 
-import axios from "axios";
+import { History } from "../Global/history";
 
 import "../Styles/dist/UserSettings.css";
 
-function UserSettings(props) {
+function UserSettings() {
   const [active, setActive] = React.useState(false);
   const [details, setDetails] = React.useState(false);
   const [updates, setUpdates] = React.useState(false);
@@ -39,18 +40,16 @@ function UserSettings(props) {
   };
 
   const Logout = () => {
+
+    // Removing Marked in User Details - NEEDED TO USE THE WEBSITE
+
     localStorage.removeItem("token");
     localStorage.removeItem("_id");
-    return (
-      <Redirect
-        to={{
-          pathname: "/login",
-          state: {
-            from: props.location,
-          },
-        }}
-      />
-    );
+
+    // Redirecting the User
+
+    History.push('/login');
+    window.location.reload();
   };
 
   return (

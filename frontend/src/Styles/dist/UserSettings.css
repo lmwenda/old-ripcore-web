@@ -2,8 +2,9 @@
   display: flex;
 }
 .usersettings .usersettings_sidebar {
-  margin-top: 80px;
+  margin-top: 30px;
   background-color: #0f0f0f;
+  border-radius: 4px;
   color: #fff;
   text-align: center;
   height: 100vh;
