@@ -200,10 +200,36 @@ router.get("/user/:id", function (req, res) {
   });
 }); // Updating User Account Details
 
-router.put("/me/:id", function (req, res) {
-  var user = _User["default"].findById(req.params.id);
+router.put("/me/:id", function _callee3(req, res) {
+  var user, salt, hashedPassword;
+  return regeneratorRuntime.async(function _callee3$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          user = _User["default"].findById(req.params.id);
+          _context3.next = 3;
+          return regeneratorRuntime.awrap(_bcrypt["default"].genSalt(10));
 
-  _User["default"].updateOne(user, req.body).then(console.log("Updated Account.")).then(res.send("Updated Account."));
+        case 3:
+          salt = _context3.sent;
+          _context3.next = 6;
+          return regeneratorRuntime.awrap(_bcrypt["default"].hash(req.body.password, salt));
+
+        case 6:
+          hashedPassword = _context3.sent;
+
+          _User["default"].updateOne(user, {
+            email: req.body.email,
+            username: req.body.username,
+            password: hashedPassword
+          }).then(console.log("Updated Account.")).then(res.send("Updated Account."));
+
+        case 8:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  });
 });
 var _default = router;
 exports["default"] = _default;

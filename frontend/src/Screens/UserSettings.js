@@ -9,6 +9,7 @@ import UserDetails from '../Components/UserDetails';
 import logo from "../Global/Images/logo.jpg";
 
 import '../Styles/dist/UserSettings.css';
+import { Redirect } from 'react-router';
 
 function UserSettings() {
     const [ active, setActive ] = React.useState(false);
@@ -31,6 +32,17 @@ function UserSettings() {
         setUpdates(true);
     }
 
+    const Logout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("_id");
+        return <Redirect to={{
+            pathname: '/login',
+            state: {
+              from: props.location
+            }
+          }} />
+    }
+
     return (
         <div className="usersettings">
             <header>
@@ -49,8 +61,13 @@ function UserSettings() {
                         Account Details
                     </Button>
 
-                    <Button onClick={Update} style={{marginBottom: '5px'}}>
+                    <Button onClick={Update} style={{marginBottom: '10px'}}>
                         Update Account
+                    </Button>
+
+                    <Button variant="secondary" 
+                    onClick={Logout} style={{marginBottom: '5px'}}>
+                        Logout
                     </Button>
 
                     <Show />
@@ -73,7 +90,7 @@ function UserSettings() {
                             margin: '100px',
                             textAlign: 'center'
                         }}>Account Settings</h1>
-                        <Image style={{height: '300px', marginLeft: '360px'}}
+                        <Image style={{height: '300px', marginLeft: '350px'}}
                          src={logo} roundedCircle />
                     </div>
                     

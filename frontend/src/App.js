@@ -18,7 +18,6 @@ import SubscriptionScreen from "./Screens/SubscriptionScreen";
 
 function App() {
   const _id = localStorage.getItem("_id");
-  const token = localStorage.getItem("token");
 
   return (
       <BrowserRouter> 

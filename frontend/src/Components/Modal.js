@@ -35,7 +35,7 @@ function Show(props, { title, firstButton, secondButton }) {
   
     return (
       <>
-        <Button variant="secondary" onClick={handleShow}>
+        <Button variant="danger" onClick={handleShow}>
           Delete Account
         </Button>
   

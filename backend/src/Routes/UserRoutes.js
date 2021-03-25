@@ -114,9 +114,15 @@ router.get("/user/:id", (req, res) => {
 });
 
 // Updating User Account Details
-router.put("/me/:id", (req, res) => {
+router.put("/me/:id", async (req, res) => {
   const user = User.findById(req.params.id);
-  User.updateOne(user, req.body)
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(req.body.password, salt);
+  User.updateOne(user, {
+    email: req.body.email,
+    username: req.body.username,
+    password: hashedPassword
+  })
     .then(console.log("Updated Account."))
     .then(res.send("Updated Account."));
 });
