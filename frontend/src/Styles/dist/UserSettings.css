@@ -2,10 +2,10 @@
   display: flex;
 }
 .usersettings .usersettings_sidebar {
-  margin-top: 30px;
-  background-color: #0f0f0f;
+  margin-top: 80px;
+  background-color: #fff;
   border-radius: 4px;
-  color: #fff;
+  color: #000;
   text-align: center;
   height: 100vh;
   flex: 0.25;
@@ -16,8 +16,8 @@
   flex-direction: column;
 }
 .usersettings .usersettings_sidebar > hr {
-  background: #fff;
-  height: 3px;
+  background: #000;
+  height: 2px;
 }
 .usersettings .usersettings_main {
   margin-top: 60px;

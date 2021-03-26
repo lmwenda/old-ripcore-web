@@ -1,12 +1,12 @@
-$dark: #0f0f0f;
+$light: #fff;
 
 .usersettings{
     display: flex;
     .usersettings_sidebar{
-        margin-top;
-        background-color: $dark;
+        margin-top: 80px;
+        background-color: $light;
         border-radius: 4px;
-        color: #fff;
+        color: #000;
         text-align: center;
         height: 100vh;
         flex: 0.25;
@@ -19,8 +19,8 @@ $dark: #0f0f0f;
     }
 
     .usersettings_sidebar > hr{
-        background: #fff;
-        height: 3px;
+        background: #000;
+        height: 2px;
     }
 
     .usersettings_main{
