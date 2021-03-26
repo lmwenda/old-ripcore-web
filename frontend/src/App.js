@@ -8,7 +8,6 @@ import HomeScreen from "./Screens/HomeScreen";
 import LoginScreen from "./Screens/LoginScreen";
 import SignupScreen from "./Screens/SignupScreen";
 import UserSettings from "./Screens/UserSettings";
-import TrainingScreen from "./Screens/TrainingScreen";
 import DownloadScreen from "./Screens/DownloadScreen";
 import SubscriptionScreen from "./Screens/SubscriptionScreen";
 
@@ -28,7 +27,6 @@ function App() {
         <Route path="/signup" component={SignupScreen} exact />
         <Route path="/admin" component={PackScreen} exact />
         <Route path="/subscriptions" component={SubscriptionScreen} />
-        <Route path="/admin/packs" component={TrainingScreen} exact />
 
         <Route path={`/settings/${_id}`} component={UserSettings} />
 
