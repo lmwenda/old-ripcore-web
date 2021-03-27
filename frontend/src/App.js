@@ -9,6 +9,7 @@ import LoginScreen from "./Screens/LoginScreen";
 import SignupScreen from "./Screens/SignupScreen";
 import UserSettings from "./Screens/UserSettings";
 import DownloadScreen from "./Screens/DownloadScreen";
+import SetAdminScreen from "./Screens/SetAdminScreen";
 import SubscriptionScreen from "./Screens/SubscriptionScreen";
 
 // Protected Routes
@@ -27,9 +28,8 @@ function App() {
         <Route path="/signup" component={SignupScreen} exact />
         <Route path="/admin" component={PackScreen} exact />
         <Route path="/subscriptions" component={SubscriptionScreen} />
-
         <Route path={`/settings/${_id}`} component={UserSettings} />
-
+        <Route path="/admin/set-admin" component={SetAdminScreen} exact />
         <Route path="*" component={() => "404 NOT FOUND"} />
       </Switch>
     </BrowserRouter>

@@ -1,0 +1,20 @@
+@media (min-width: 1024px) {
+  .set-admin-screen header {
+    margin: 0;
+  }
+  .set-admin-screen .set-admin-screen-user {
+    margin: 100px;
+    border: 1px solid none;
+    box-shadow: 0 5px 50px rgba(0, 0, 0, 0.5);
+    padding: 50px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .set-admin-screen .set-admin-screen-form {
+    margin: 100px;
+    border: 1px solid none;
+    box-shadow: 0 5px 50px rgba(0, 0, 0, 0.5);
+    padding: 50px;
+    border-radius: 10px;
+  }
+}

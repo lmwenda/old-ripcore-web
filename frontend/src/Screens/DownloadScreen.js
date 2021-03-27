@@ -9,7 +9,7 @@ import Header from "../Components/Header";
 import logo from "../Global/Images/logo.jpg";
 
 function DownloadScreen(){
-    const title = "Rip Core";
+    const title = "RIP Core";
     return(
         <div>
             <header>

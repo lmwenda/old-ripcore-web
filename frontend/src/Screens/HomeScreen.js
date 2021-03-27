@@ -8,7 +8,7 @@ import "../Styles/dist/HomeScreen.css";
 import Header from "../Components/Header";
 
 function HomeScreen() {
-  const title = "Rip Core";
+  const title = "RIP Core";
   return (
     <div>
       <header>

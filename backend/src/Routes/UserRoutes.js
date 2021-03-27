@@ -8,9 +8,6 @@ import User from "../Models/User.js";
 import ValidateUser from "../Auth/ValidateUser.js";
 import ValidateUpdatedUser from "../Auth/ValidateUpdatedUser.js";
 
-//custom middleware
-import checkAdmin from "../middlewares/userAdmin.js";
-
 // Initializations
 dotenv.config();
 const router = express.Router();
@@ -59,13 +56,13 @@ router.post("/verify", (req, res) => {
   }
 });
 
-router.post("/setadmin/:id", [checkAdmin], async (req, res) => {
+router.put("/setadmin/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     await User.updateOne(user, {
       isAdmin: req.body.isAdmin,
-    });
-    res.status(200).send({ status: "Success", user: user.name });
+    })
+      .then(res.status(200).send({ status: "Success", user: user.name }));
   } catch (err) {
     res.status(400).send(err);
   }
