@@ -20,9 +20,9 @@ function DownloadScreen(){
                 <Row>
                     <Col id="const">
 
-                        <img style={{ height: "200px", 
+                        {/* <img style={{ height: "200px", 
                          borderRadius: '4px', 
-                         marginTop: '10px' }} id="picture" src={logo} alt="" />
+                         marginTop: '10px' }} id="picture" src={logo} alt="" /> */}
                          
                         <h1 id="title" style={{textAlign: 'center'}}>
                             Thank you for downloading Rip Core!

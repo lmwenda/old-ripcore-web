@@ -1,24 +1,14 @@
-@media (min-width: 1440px) {
-  .wrapper {
-    margin-top: 150px;
-    color: #fff;
-    background: #000;
-    margin-left: 650px;
-    border-radius: 10px;
-    height: 530px;
-    width: 10%;
-    text-align: center;
-  }
-  .wrapper #download-button {
-    padding: 300px;
-  }
-}
 @media (min-width: 1024px) {
   .wrapper {
-    margin-top: 130px;
-    background: #e0dede;
+    margin-top: 200px;
     color: #000;
-    width: 60%;
+    background: #fff;
+    margin-left: 23.5%;
+    justify-content: center;
+    border-radius: 10px;
+    height: 430px;
+    width: 50.5%;
+    text-align: center;
   }
 }
 @media (min-width: 1024px) and (min-width: 1024px) {
@@ -26,15 +16,15 @@
     margin-left: 41%;
   }
   .wrapper #const #download-button {
-    margin-left: 465px;
+    margin-left: 35px;
   }
 }
 @media (min-width: 1024px) and (min-width: 1920px) {
   .wrapper #const #picture {
-    margin-left: 45%;
+    margin-left: 3%;
   }
   .wrapper #const #download-button {
-    margin-left: 45%;
+    margin-left: 2.5%;
   }
 }
 @media (min-width: 1024px) {
