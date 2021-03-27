@@ -2,6 +2,12 @@
   .set-admin-screen header {
     margin: 0;
   }
+  .set-admin-screen .mini-header {
+    margin: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   .set-admin-screen .set-admin-screen-user {
     margin: 100px;
     border: 1px solid none;

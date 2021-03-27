@@ -1,6 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+import { Link } from "react-router-dom";
+import { IconButton } from '@material-ui/core';
 import { Form, Button } from 'react-bootstrap';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import Header from '../Components/Header';
 
@@ -80,6 +83,14 @@ function SetAdminScreen() {
             </header>
 
             <br />
+
+            <div className="mini-header">
+                <Link to="/admin">
+                    <IconButton>
+                        <ArrowBackIcon />
+                    </IconButton>
+                </Link>
+            </div>
 
             <div className="set-admin-screen-user">
                 {

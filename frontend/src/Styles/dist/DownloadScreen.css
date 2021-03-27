@@ -6,7 +6,7 @@
     margin-left: 650px;
     border-radius: 10px;
     height: 530px;
-    width: 30%;
+    width: 10%;
     text-align: center;
   }
   .wrapper #download-button {
@@ -18,11 +18,7 @@
     margin-top: 130px;
     background: #e0dede;
     color: #000;
-    margin-left: 140px;
-    border-radius: 10px;
-    height: 430px;
-    width: 80%;
-    text-align: left;
+    width: 60%;
   }
 }
 @media (min-width: 1024px) and (min-width: 1024px) {
