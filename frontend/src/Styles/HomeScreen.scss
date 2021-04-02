@@ -8,8 +8,10 @@
         width: 30%;
         text-align: center;
 
-        #download-button{
-            padding: 300px;
+        #const{
+            #arrow{
+                border: 1px solid #000;
+            }
         }
     }
 }
@@ -23,6 +25,12 @@
         height: 430px;
         width: 80%;
         text-align: left;
+
+        #const{
+            #arrow{
+                margin-top: 200px;
+            }
+        }
     }
 }
 

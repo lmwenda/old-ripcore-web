@@ -17,13 +17,13 @@ function PackScreen() {
   const title = "RIP Core Admin";
 
   React.useEffect(() => {
-    async function getProducts(){
-      const { data } = await axios.get("http://locahost:5000/api/pack/");
+    async function getPacks(){
+      const { data } = await axios.get("http://localhost:5000/api/pack/");
       console.log(data);
       setPacks(data);
     }
 
-    getProducts();
+    getPacks();
 }, [])
 
 
