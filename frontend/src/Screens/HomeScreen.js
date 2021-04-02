@@ -29,7 +29,7 @@ function HomeScreen() {
   const youtubeURL = "https://www.youtube.com/watch?v=j1F-CosyaQY&ab_channel=RIPCore";
 
   return (
-    <div>
+    <div style={{margin: 0}}>
       <header>
         {
           node ? null : <Header title={title} />

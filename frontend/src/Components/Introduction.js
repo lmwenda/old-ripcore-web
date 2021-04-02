@@ -6,7 +6,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 import Socials from './Socials';
-import HomeScreen from "../Screens/HomeScreen";
+import HomeScreen from '../Screens/HomeScreen';
 
 // Styles
 
@@ -31,43 +31,45 @@ function Introduction({ title, description, youtubeUrl, scrollUp, scrollDown }) 
     }
 
     return (
-        {
-            fromNode ? <HomeScreen /> : toNode ? <Socials /> : (
-                <div>                
-                    {
-                        scrollUp ? (
-                            <div>
-                                <IconButton>
-                                    <ArrowUpwardIcon />
-                                </IconButton>
-                            </div>
-                        ) : null
-                    }
+        <div style={{margin: 0}}>
+            {
+                toNode ? <Socials /> : fromNode ? window.location.reload() : (
+                    <div>                
+                        {
+                            scrollUp ? (
+                                <div>
+                                    <IconButton onClick={ScrollFrom}>
+                                        <ArrowUpwardIcon />
+                                    </IconButton>
+                                </div>
+                            ) : null
+                        }
 
-                    <h1>{title}</h1>
+                        <h1>{title}</h1>
 
-                    {
-                        youtubeUrl ? (
-                            <ReactPlayer
-                                player
-                                onEnablePIP={playerPIP}
-                                url={youtubeUrl}
-                            />
-                        ) : description ? <p>{description}</p> : null
-                    }
+                        {
+                            youtubeUrl ? (
+                                <ReactPlayer
+                                    player
+                                    onEnablePIP={playerPIP}
+                                    url={youtubeUrl}
+                                />
+                            ) : description ? <p>{description}</p> : null
+                        }
 
-                    {
-                        scrollDown ? (
-                            <div>
-                                <IconButton onClick={ScrollFrom}>
-                                    <ArrowDownwardIcon />
-                                </IconButton>
-                            </div>
-                        ) : null
-                    }
-                </div>
-            )
-        }
+                        {
+                            scrollDown ? (
+                                <div>
+                                    <IconButton onClick={ScrollTo}>
+                                        <ArrowDownwardIcon />
+                                    </IconButton>
+                                </div>
+                            ) : null
+                        }
+                    </div>
+                )
+            }
+        </div>
     )
 }
 
