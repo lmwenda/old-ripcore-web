@@ -6,7 +6,6 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 import Socials from './Socials';
-import HomeScreen from '../Screens/HomeScreen';
 
 // Styles
 
@@ -33,7 +32,9 @@ function Introduction({ title, description, youtubeUrl, scrollUp, scrollDown }) 
     return (
         <div style={{margin: 0}}>
             {
-                toNode ? <Socials /> : fromNode ? window.location.reload() : (
+                toNode ? <Socials title="Follow us on Social Media" description="Discord"
+                 /> : 
+                fromNode ? window.location.reload() : (
                     <div>                
                         {
                             scrollUp ? (

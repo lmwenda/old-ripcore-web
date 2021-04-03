@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { IconButton } from "@material-ui/core";
+import TypeWriter from "typewriter-effect";
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 // Styles
@@ -46,8 +47,23 @@ function HomeScreen() {
             <Row>
               <Col id="const">
                 <h1 id="title" style={{ textAlign: "center" }}>
-                  Your Plays, Your Way, All Day!
-                </h1>
+
+                  <TypeWriter onInit={(typewriter) => {
+                    typewriter
+                      .typeString("Your Plays,")
+                      .pauseFor(2000)
+                      .deleteAll()
+                      .typeString("Your Ways,")
+                      .pauseFor(2000)
+                      .deleteAll()
+                      .typeString("All Day!")
+                      .pauseFor(2000)
+                      .deleteAll()
+                      .typeString("Your Plays, Your Ways, All Day!")
+                      .start();
+                  }} />
+
+                </h1> 
                 <br />
                 <div>
                   Rip Core is a rocket league training tool based 
