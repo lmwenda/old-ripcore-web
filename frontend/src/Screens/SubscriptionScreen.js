@@ -11,7 +11,7 @@ function SubscriptionScreen(){
     return(
         <div>
             <header>
-                <Header title={title} />
+                <Header title={title} activeSub={true} />
             </header>
 
             <br />

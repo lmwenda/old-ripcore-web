@@ -13,7 +13,7 @@ function LoginScreen(){
     return(
         <div>
             <header>
-                <Header title={title} />
+                <Header title={title} activeSign={true} />
             </header>
             <br/>
             <div id="login-container">

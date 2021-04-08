@@ -4,6 +4,7 @@
     color: #000;
     margin-left: 650px;
     border-radius: 10px;
+    background: #011936;
     height: 530px;
     width: 30%;
     text-align: center;
@@ -20,6 +21,7 @@
     border-radius: 10px;
     height: 430px;
     width: 80%;
+    background: #011936;
     text-align: left;
   }
   .wrapper #const #arrow {

@@ -30,10 +30,10 @@ function HomeScreen() {
   const youtubeURL = "https://www.youtube.com/watch?v=j1F-CosyaQY&ab_channel=RIPCore";
 
   return (
-    <div style={{margin: 0}}>
+    <div style={{margin: 0, background: "#011936", color: "#fff"}}>
       <header>
         {
-          node ? null : <Header title={title} />
+          node ? null : <Header title={title} activeHome={true} />
         }
       </header>
       <br />
@@ -43,7 +43,8 @@ function HomeScreen() {
             <Introduction title="Beat the Elite" youtubeUrl={youtubeURL}
              scrollUp={true} scrollDown={true} /> 
           ) : (
-          <section style={{ backgroundColor: "#fff" }} className="wrapper">
+          <section style={{ backgroundColor: "#011936", color: '#fff' }}
+           className="wrapper">
             <Row>
               <Col id="const">
                 <h1 id="title" style={{ textAlign: "center" }}>

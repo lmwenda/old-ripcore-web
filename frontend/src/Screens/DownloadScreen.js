@@ -13,7 +13,7 @@ function DownloadScreen(){
     return(
         <div>
             <header>
-                <Header title={title} />
+                <Header title={title} activeDownload={true} />
             </header>
             <br/>
             <div className="wrapper">

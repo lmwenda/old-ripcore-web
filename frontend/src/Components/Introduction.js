@@ -9,6 +9,7 @@ import Socials from './Socials';
 
 // Styles
 
+import '../Styles/dist/Introduction.css';
 
 // Introduction Component
 
@@ -30,12 +31,12 @@ function Introduction({ title, description, youtubeUrl, scrollUp, scrollDown }) 
     }
 
     return (
-        <div style={{margin: 0}}>
+        <div className="introduction" style={{margin: 0}}>
             {
                 toNode ? <Socials title="Follow us on Social Media" description="Discord"
                  /> : 
                 fromNode ? window.location.reload() : (
-                    <div>                
+                    <div>
                         {
                             scrollUp ? (
                                 <div>
@@ -46,17 +47,20 @@ function Introduction({ title, description, youtubeUrl, scrollUp, scrollDown }) 
                             ) : null
                         }
 
-                        <h1>{title}</h1>
+                        <div className="intro-container">                
+                        
+                            <h1>{title}</h1>
 
-                        {
-                            youtubeUrl ? (
-                                <ReactPlayer
-                                    player
-                                    onEnablePIP={playerPIP}
-                                    url={youtubeUrl}
-                                />
-                            ) : description ? <p>{description}</p> : null
-                        }
+                            {
+                                youtubeUrl ? (
+                                    <ReactPlayer
+                                        player
+                                        onEnablePIP={playerPIP}
+                                        url={youtubeUrl}
+                                    />
+                                ) : description ? <p>{description}</p> : null
+                            }
+                        </div>
 
                         {
                             scrollDown ? (
@@ -67,6 +71,7 @@ function Introduction({ title, description, youtubeUrl, scrollUp, scrollDown }) 
                                 </div>
                             ) : null
                         }
+
                     </div>
                 )
             }

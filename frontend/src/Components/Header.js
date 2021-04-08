@@ -10,7 +10,7 @@ import logo from "../Global/Images/logo.jpg";
 // Styles
 import "../Styles/dist/Header.css";
 
-function Header({ title }) {
+function Header({ title, activeHome, activeDownload, activeSub, activeCon, activeSign }) {
 
   // USER OBJECT
   const [ user, setUser ] = React.useState({
@@ -43,18 +43,29 @@ function Header({ title }) {
         <image src={logo} alt="" />
         <h2>{title}</h2>
         <ul className="nav">
-          <Link style={{ textDecoration: "none" }} to="/">
-            <li>Home</li>
-          </Link>
+          { activeHome ? (
+            <Link style={{ textDecoration: "none", color: 'pink' }}
+            to="/">
+              <li style={{color: '#ea0edb'}}>Home</li>
+            </Link>
+          ) : (
+            <Link style={{ textDecoration: "none", color: '#000' }}
+            to="/">
+              <li>Home</li>
+            </Link>
+          )
+          }
 
           {
             token ? (
               <Link style={{ textDecoration: "none" }} to="/download">
-                <li>Download</li>
+                {activeDownload ? <li style={{color: '#ea0edb'}}>Download</li> : (
+                <li>Download</li> ) }
               </Link>
             ) : ( 
               <Link style={{ textDecoration: "none" }} to="/login">
-                <li>Download</li>
+                {activeDownload ? <li style={{color: '#ea0edb'}}>Download</li> : (
+                <li>Download</li> ) }
               </Link>
             )
           }
@@ -62,11 +73,27 @@ function Header({ title }) {
           {
             token ? (
               <Link style={{ textDecoration: "none" }} to="/subscriptions">
-                <li>Subscriptions</li>
+                {activeSub ? <li style={{color: '#ea0edb'}}>Subscriptions</li> : (
+                <li>Subscriptions</li> ) }
               </Link>
             ) : ( 
               <Link style={{ textDecoration: "none" }} to="/login">
-                <li>Subscriptions</li>
+                {activeSub ? <li style={{color: '#ea0edb'}}>Subscriptions</li> : (
+                <li>Subscriptions</li> ) }
+              </Link>
+            )
+          }
+
+{
+            token ? (
+              <Link style={{ textDecoration: "none" }} to="/contact-us">
+                {activeCon ? <li style={{color: '#ea0edb'}}>Contact Us</li> : (
+                <li>Contact Us</li> ) }
+              </Link>
+            ) : ( 
+              <Link style={{ textDecoration: "none" }} to="/login">
+                {activeCon ? <li style={{color: '#ea0edb'}}>Contact Us</li> : (
+                <li>Contact Us</li> ) }
               </Link>
             )
           }
@@ -78,7 +105,8 @@ function Header({ title }) {
               </Link>
             ) : (
               <Link style={{ textDecoration: "none" }} to="/signup">
-                <li id="welcome">Signup</li>
+                {activeSign ? <li style={{color: '#ea0edb'}}>Sign Up</li> : (
+                <li>Sign Up</li> ) }
               </Link>
             )
           }
