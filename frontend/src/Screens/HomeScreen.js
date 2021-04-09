@@ -15,14 +15,6 @@ function HomeScreen() {
   // React Elements
 
   const [ node, setNode ] = React.useState(false);
-  const [ homeScrollOff, setHomeScrollOff ] = React.useState(false);
-
-  // OnClick Functions
-  const ScrollFromHome = () => {
-    setNode(true);
-    setHomeScrollOff(true);
-    console.log("Scroll From Home.");
-  }
 
   // Initializations
 
@@ -30,60 +22,30 @@ function HomeScreen() {
   const youtubeURL = "https://www.youtube.com/watch?v=j1F-CosyaQY&ab_channel=RIPCore";
 
   return (
-    <div style={{margin: 0, background: "#011936", color: "#fff"}}>
+    <div style={{margin: 0, background: "#465362", color: "#fff"}}>
       <header>
         {
           node ? null : <Header title={title} activeHome={true} />
         }
       </header>
+
       <br />
+
+      <div className="home-tag"><h1>Home Page</h1></div>
       
-      {
-        homeScrollOff ? (
-            <Introduction title="Beat the Elite" youtubeUrl={youtubeURL}
-             scrollUp={true} scrollDown={true} /> 
-          ) : (
-          <section style={{ backgroundColor: "#011936", color: '#fff' }}
-           className="wrapper">
-            <Row>
-              <Col id="const">
-                <h1 id="title" style={{ textAlign: "center" }}>
+      <div style={{ marginTop: 0, backgroundColor: "#a0a09f", color: '#fff' }}
+      className="wrapper">
+          <h1 id="title" style={{ textAlign: "left", color: '#fff' }}>
+            Your Plays,
+          </h1>
+          <h1 id="title" style={{ textAlign: "left", color: '#fff' }}>
+            Your Ways,
+          </h1> 
+          <h1 id="title" style={{ textAlign: "left", color: '#fff' }}>
+            All Day!
+          </h1> 
 
-                  <TypeWriter onInit={(typewriter) => {
-                    typewriter
-                      .typeString("Your Plays,")
-                      .pauseFor(2000)
-                      .deleteAll()
-                      .typeString("Your Ways,")
-                      .pauseFor(2000)
-                      .deleteAll()
-                      .typeString("All Day!")
-                      .pauseFor(2000)
-                      .deleteAll()
-                      .typeString("Your Plays, Your Ways, All Day!")
-                      .start();
-                  }} />
-
-                </h1> 
-                <br />
-                <div>
-                  Rip Core is a rocket league training tool based 
-                  around the recreation of RLCS moments.
-                  You can choose to take the place of any professional 
-                  player in these moments and try to make the plays that they did              
-                </div>
-
-                <div id="arrow"> 
-                  <IconButton onClick={ScrollFromHome}>
-                    <ArrowDownwardIcon />
-                  </IconButton>
-                </div>
-              </Col>
-            </Row>
-          </section>
-        )
-      }
-      
+      </div>
     </div>
   );
 }

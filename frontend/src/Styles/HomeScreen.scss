@@ -1,41 +1,24 @@
-@media(min-width: 1440px){
-    .wrapper{
-        margin-top: 150px;
-        color: #000;
-        margin-left: 650px;
-        border-radius: 10px;
-        background: #011936;
-        height: 530px;
-        width: 30%;
-        text-align: center;
-
-        #const{
-            #arrow{
-                border: 1px solid #000;
-            }
-        }
-    }
+@mixin marginForTag{
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 57px;
 }
 
 @media(min-width: 1024px){
-    .wrapper{
-        margin-top: 130px;
-        color: #000;
-        margin-left: 140px;
-        border-radius: 10px;
-        height: 430px;
-        width: 80%;
-        background: #011936;
-        text-align: left;
 
-        #const{
-            #arrow{
-                margin-top: 200px;
-            }
+    .home-tag{
+        background-color: #ea0edb;
+        @include marginForTag();
+        border-radius: 4px;
+        height: 60px;
+
+        h1{
+            font-size: 30px;
+            padding: 10px;
         }
     }
-}
-
-@media(max-width: 600px){
     
+    .wrapper{
+        
+    }
 }
