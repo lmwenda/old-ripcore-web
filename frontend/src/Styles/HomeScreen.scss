@@ -1,24 +1,38 @@
 @mixin marginForTag{
-    margin-left: 100px;
+    margin-left: 225px;
     margin-right: 100px;
     margin-top: 57px;
 }
 
 @media(min-width: 1024px){
+    .homeScreen{
 
-    .home-tag{
-        background-color: #ea0edb;
-        @include marginForTag();
-        border-radius: 4px;
-        height: 60px;
+        .home-tag{
+            background-color: #ea0edb;
+            @include marginForTag();
+            width: 900px;
+            border-radius: 4px;
+            height: 60px;
 
-        h1{
-            font-size: 30px;
-            padding: 10px;
+            h1{
+                font-size: 30px;
+                padding: 10px;
+            }
         }
-    }
-    
-    .wrapper{
         
+        .wrapper{
+            width: 900px;
+            margin-left: 225px;
+            .video{
+                margin-bottom: 100px;
+            }
+            #title{
+                border: 1px solid #000;
+                width: 450px;
+                padding: 0;
+                margin: 0;
+                font-size: 80px;
+            }
+        }
     }
 }

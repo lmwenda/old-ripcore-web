@@ -1,0 +1,9 @@
+@mixin Card_Design{
+    border: 1px solid #000;
+    border-radius: 4px;
+    background-color: rgb(253, 9, 241);
+}
+
+.card{
+    @include Card_Design();
+}

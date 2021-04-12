@@ -1,14 +1,29 @@
 @media (min-width: 1024px) {
-  .home-tag {
+  .homeScreen .home-tag {
     background-color: #ea0edb;
-    margin-left: 100px;
+    margin-left: 225px;
     margin-right: 100px;
     margin-top: 57px;
+    width: 900px;
     border-radius: 4px;
     height: 60px;
   }
-  .home-tag h1 {
+  .homeScreen .home-tag h1 {
     font-size: 30px;
     padding: 10px;
+  }
+  .homeScreen .wrapper {
+    width: 900px;
+    margin-left: 225px;
+  }
+  .homeScreen .wrapper .video {
+    margin-bottom: 100px;
+  }
+  .homeScreen .wrapper #title {
+    border: 1px solid #000;
+    width: 450px;
+    padding: 0;
+    margin: 0;
+    font-size: 80px;
   }
 }

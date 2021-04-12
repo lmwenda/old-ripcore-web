@@ -1,0 +1,6 @@
+@media (min-width: 1024px) {
+  .introduction .intro-container {
+    margin-bottom: 300px;
+    margin-left: 600px;
+  }
+}
